@@ -1,1 +1,1 @@
-web: gunicorn run:hc
+web: gunicorn hc.wsgi --log-file -
