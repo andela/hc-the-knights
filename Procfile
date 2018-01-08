@@ -1,2 +1,2 @@
-web: gunicorn hc.wsgi --log-file -
-heroku ps:scale web=1
+release: python manage.py migrate
+web: gunicorn hc.wsgi:application
