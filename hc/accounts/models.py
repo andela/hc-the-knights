@@ -8,7 +8,8 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.core import signing
 from django.db import models
-from django.urls import reverse
+# from django.urls import reverse
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 from hc.lib import emails
 
