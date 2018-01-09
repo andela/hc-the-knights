@@ -20,7 +20,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'the-knights-health-checks.herokuapp.com']
+                 'hc-the-knight.herokuapp.com']
 DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
 USE_PAYMENTS = False
 
@@ -43,6 +43,7 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE = (
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -102,11 +103,6 @@ if os.environ.get("DB") == "postgres":
         }
     }
 
-if os.environ.get("HerokuDeploy") == "1":
-    DATABASES = {
-        'default': dj_database_url.config()
-    }
-
 if os.environ.get("DB") == "mysql":
     DATABASES = {
         'default': {
@@ -116,6 +112,13 @@ if os.environ.get("DB") == "mysql":
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
+ 
+if os.environ.get("HEROKU") == "TRUE":
+  STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+if os.environ.get("HEROKU") == "TRUE":
+  db_from_env = dj_database_url.config()
+  DATABASES[default].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -139,7 +142,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
 )
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
