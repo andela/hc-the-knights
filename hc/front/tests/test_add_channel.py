@@ -1,5 +1,6 @@
 from django.test.utils import override_settings
-
+# imported user class model
+from django.contrib.auth.models import User
 from hc.api.models import Channel
 from hc.test import BaseTestCase
 
@@ -38,11 +39,16 @@ class AddChannelTestCase(BaseTestCase):
             self.assertContains(r, "Integration Settings", status_code=200)
 
     ### Test that the team access works
-    def team_access_works(self):
+    def test_team_access_works(self):
         """ test a team access"""
-        
+        self.client.login(username="bob@example.org", password="password")
+        url = "/integrations/add/"
+        form = {"kind": "hipchat"}
+        self.client.post(url, form)
+        # create an instance of the user
+        alice_channel = User.objects.get(email="alice@example.org")
+        self.assertEqual(Channel.objects.filter(user=alice_channel).count(), 1)
     ### Test that bad kinds don't work
-
     def test_bad_kinds(self):
         """ test that bad kinds dont work. """
         self.client.login(username="alice@example.org", password="password")
