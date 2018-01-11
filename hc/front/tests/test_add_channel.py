@@ -41,6 +41,8 @@ class AddChannelTestCase(BaseTestCase):
     ### Test that the team access works
     def test_team_access_works(self):
         """ test a team access"""
+        alice_channel = User.objects.get(email="alice@example.org")
+        alice_before = Channel.objects.filter(user=alice_channel).count()
         self.client.login(username="bob@example.org", password="password")
         url = "/integrations/add/"
         form = {"kind": "hipchat"}
@@ -49,6 +51,8 @@ class AddChannelTestCase(BaseTestCase):
         alice_channel = User.objects.get(email="alice@example.org")
         self.assertEqual(Channel.objects.filter(user=alice_channel).count(), 1)
  
+        alice_after = Channel.objects.filter(user=alice_channel).count()
+        self.assertEqual(alice_after, (alice_before + 1))
     ### Test that bad kinds don't work
     def test_bad_kinds(self):
         """ test that bad kinds dont work. """
