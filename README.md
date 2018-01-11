@@ -1,3 +1,5 @@
+[![Coverage Status](https://coveralls.io/repos/github/andela/hc-the-knights/badge.svg?branch=develop)](https://coveralls.io/github/andela/hc-the-knights?branch=develop)
+
 # healthchecks knights
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
