@@ -222,4 +222,63 @@ class NotifyTestCase(BaseTestCase):
         json = kwargs["json"]
         self.assertEqual(json["message_type"], "CRITICAL")
 
-    ### Test that the web hooks handle connection errors and error 500s
+    # Test that the web hooks handle connection errors and error 500s
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_500(self, mock_post):
+        ''' Test that webhooks handle internal server errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 500
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 500")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_500(self, mock_post):
+        ''' Test that webhooks handle internal server errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 500
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 500")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_501(self, mock_post):
+        ''' Test that webhooks handle unrecognised request errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 501
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 501")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_502(self, mock_post):
+        ''' Test that webhooks handle bad gateway errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 502
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 502")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_503(self, mock_post):
+        ''' Test that webhooks handle server currently not available errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 503
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 503")
+
+    @patch("hc.api.transports.requests.request")
+    def test_webhooks_handle_504(self, mock_post):
+        ''' Test that webhooks handle gateway timeout errors '''
+        self._setup_data("webhook", "http://error")
+        mock_post.return_value.status_code = 504
+        self.channel.notify(self.check)
+
+        n = Notification.objects.get()
+        self.assertEqual(n.error, "Received status code 504")
