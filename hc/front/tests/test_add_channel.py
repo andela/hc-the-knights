@@ -47,10 +47,6 @@ class AddChannelTestCase(BaseTestCase):
         url = "/integrations/add/"
         form = {"kind": "hipchat"}
         self.client.post(url, form)
-        # create an instance of the user
-        alice_channel = User.objects.get(email="alice@example.org")
-        self.assertEqual(Channel.objects.filter(user=alice_channel).count(), 1)
- 
         alice_after = Channel.objects.filter(user=alice_channel).count()
         self.assertEqual(alice_after, (alice_before + 1))
     ### Test that bad kinds don't work
