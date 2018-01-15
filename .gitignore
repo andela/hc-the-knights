@@ -6,6 +6,7 @@ hc/local_settings.py
 static-collected
 myenv/
 .DS_Store
-static/.DS_Store.vscode/
+static/.DS_Store
+.vscode/
 .idea/
 hc-venv/
