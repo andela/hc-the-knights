@@ -14,6 +14,8 @@ class CheckTokenTestCase(BaseTestCase):
         self.assertContains(r, "You are about to log in")
 
     def test_it_redirects(self):
+        """Test method to check redirection.
+        """
         r = self.client.post("/accounts/check_token/alice/secret-token/")
         self.assertRedirects(r, "/checks/")
 
@@ -21,8 +23,16 @@ class CheckTokenTestCase(BaseTestCase):
         self.profile.refresh_from_db()
         self.assertEqual(self.profile.token, "")
 
-    ### Login and test it redirects already logged in
+    def test_redirection_on_login(self):
+        """ Test method to check if a redirection occurs
+        if an existing user tries to login in.
+        """
+        form = {'email': self.alice.email, 'password': 'password'}
+        redirect = self.client.post("/accounts/login/", form)
+        self.assertRedirects(redirect, "/checks/")
 
-    ### Login with a bad token and check that it redirects
-
-    ### Any other tests?
+    def test_invalid_token_on_login(self):
+        """ Test method to check for wrong invalid token on login.
+        """
+        token_check = self.client.post("/accounts/check_token/alice/invalid-token/")
+        self.assertRedirects(token_check, "/accounts/login/")

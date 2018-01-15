@@ -17,9 +17,11 @@ class ProfileTestCase(BaseTestCase):
         # profile.token should be set now
         self.alice.profile.refresh_from_db()
         token = self.alice.profile.token
-        ### Assert that the token is set
+        self.assertTrue(len(token) > 0)
 
-        ### Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Set password on healthchecks.io', mail.outbox[0].subject)
 
     def test_it_sends_report(self):
         check = Check(name="Test Check", user=self.alice)
@@ -27,7 +29,9 @@ class ProfileTestCase(BaseTestCase):
 
         self.alice.profile.send_report()
 
-        ###Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('Monthly Report', mail.outbox[0].subject)
 
     def test_it_adds_team_member(self):
         self.client.login(username="alice@example.org", password="password")
@@ -40,11 +44,15 @@ class ProfileTestCase(BaseTestCase):
         for member in self.alice.profile.member_set.all():
             member_emails.add(member.user.email)
 
-        ### Assert the existence of the member emails
+        # Assert the existence of the member emails
+        self.assertEqual(len(member_emails), 2)
+        self.assertIn(form['email'], member_emails)
 
         self.assertTrue("frank@example.org" in member_emails)
 
-        ###Assert that the email was sent and check email content
+        # Assert that the email was sent and check email content
+        self.assertEqual(len(mail.outbox), 1)
+        self.assertIn('You have been invited to join alice@example.org', mail.outbox[0].subject)
 
     def test_add_team_member_checks_team_access_allowed_flag(self):
         self.client.login(username="charlie@example.org", password="password")
@@ -107,4 +115,36 @@ class ProfileTestCase(BaseTestCase):
         # Expect only Alice's tags
         self.assertNotContains(r, "bobs-tag.svg")
 
-    ### Test it creates and revokes API key
+        # Test it creates and revokes API key
+
+    def test_can_create_Api_key(self):
+        """
+        Test to check creation of api key
+        """
+        self.client.login(username="alice@example.org", password="password")
+
+        form = {"create_api_key": "API_Key"}
+        res = self.client.post("/accounts/profile/", form)
+        self.assertEqual(res.status_code, 200)
+
+        self.alice.profile.refresh_from_db()
+        api_key = self.alice.profile.api_key
+
+        self.assertNotEqual(api_key, None)
+        self.assertContains(res, "The API key has been created!")
+
+    def test_app_revokes_api_key(self):
+        """
+        Test revocation of an api key
+        """
+        self.client.login(username="alice@example.org", password="password")
+
+        form = {"revoke_api_key": "API_Key"}
+        res = self.client.post("/accounts/profile/", form)
+        self.assertEqual(res.status_code, 200)
+
+        self.alice.profile.refresh_from_db()
+        api_key = self.alice.profile.api_key
+
+        self.assertEqual(api_key, "")
+        self.assertContains(res, "The API key has been revoked!")
