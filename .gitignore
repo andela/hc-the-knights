@@ -7,4 +7,4 @@ static-collected
 myenv/
 .DS_Store
 static/.DS_Store
-.vscode
+.vscode/
