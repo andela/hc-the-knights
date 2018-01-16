@@ -76,6 +76,10 @@
                     <li {% if page == 'checks' %} class="active" {% endif %}>
                         <a href="{% url 'hc-checks' %}">Checks</a>
                     </li>
+                    
+                    <li {% if page == 'unresolved checks' %} class="active" {% endif %}>
+                        <a href="{% url 'hc-unresovled-checks' %}">Unresolved Checks</a>
+                    </li>
 
                     <li {% if page == 'channels' %} class="active" {% endif %}>
                         <a href="{% url 'hc-channels' %}">Integrations</a>
