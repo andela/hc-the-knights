@@ -60,6 +60,33 @@ def my_checks(request):
 
     return render(request, "front/my_checks.html", ctx)
 
+def unresolved_checks(request):
+    unresolved_checks = Check.objects.filter(user=request.team.user)
+    checks = list(unresolved_checks)
+    counter = Counter()
+    failed = []
+    down_tags = set()
+    for check in checks:
+        status = check.get_status()
+        for tag in check.tags_list():
+            if tag == "":
+                continue
+            counter[tag] += 1
+
+            if status == "down":
+                down_tags.add(tag)
+        if status == "down":
+            failed.append(check)
+
+    ctx = {
+        "page": "unresolved checks",
+        "checks": failed,
+        "now": timezone.now(),
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+    return render(request, "front/unresolved_checks.html", ctx)
 
 def _welcome_check(request):
     check = None
