@@ -20,7 +20,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'hc-the-knight.herokuapp.com']
+                 'hc-the-knight.herokuapp.com', '127.0.0.1']
 DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
 USE_PAYMENTS = False
 
