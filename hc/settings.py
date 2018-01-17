@@ -21,7 +21,7 @@ SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
                  'hc-the-knight.herokuapp.com']
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+DEFAULT_FROM_EMAIL = 'healthchecks@gmail.com'
 USE_PAYMENTS = False
 
 
@@ -118,7 +118,7 @@ if os.environ.get("HEROKU") == "TRUE":
 
 if os.environ.get("HEROKU") == "TRUE":
   db_from_env = dj_database_url.config()
-  DATABASES[default].update(db_from_env)
+  DATABASES['default'].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -131,6 +131,8 @@ USE_L10N = True
 USE_TZ = True
 
 SITE_ROOT = "http://localhost:8000"
+
+DEFAULT_FROM_EMAIL = "hc-logros-infinitos@affiance.ug" #delete the whole thing
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
@@ -145,7 +147,25 @@ STATICFILES_FINDERS = (
 
 COMPRESS_OFFLINE = True
 
+# EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+# EMAIL_HOST = "your-smtp-server-here.com"
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "username"
+# EMAIL_HOST_PASSWORD = "password"
+# EMAIL_USE_TLS = True
+
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+# Email
+# EMAIL_HOST = os.environ.get('EMAIL_HOST')
+# EMAIL_HOST = 'smtp.sparkpostmail.com' #smpt.yourdomain.com
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'SMTP_Injection' #username
+EMAIL_HOST_USER = 'hctheknights@gmail.com'
+# EMAIL_HOST_PASSWORD = '3be1f9820f0a0b33235df6e3a83fc1920f42cf01' #password
+EMAIL_HOST_PASSWORD = 'hctk12345'
+EMAIL_USE_TLS = True
 
 # Slack integration -- override these in local_settings
 SLACK_CLIENT_ID = None

@@ -25,10 +25,16 @@ def ping(request, code):
     check.last_ping = timezone.now()
     if check.status in ("new", "paused"):
         check.status = "up"
-
+    #getting the often status from get_status function
+    if check.get_status() == "often":
+        check.status = check.get_status()
     check.save()
     check.refresh_from_db()
 
+    if check.status == "often":
+        check.send_alert()
+    if check.status == "down":
+        check.send_alert()
     ping = Ping(owner=check)
     headers = request.META
     ping.n = check.n_pings
@@ -107,8 +113,16 @@ def badge(request, username, signature, tag):
         if status == "up" and check.in_grace_period():
             status = "late"
 
+        if status == "up" and check.reversed_grace_period():
+            status = "often"
+
+
         if check.get_status() == "down":
             status = "down"
+            break
+
+        if check.get_status() == "often":
+            status = "often"
             break
 
     svg = get_badge_svg(tag, status)

@@ -18,7 +18,8 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused")
+    ("paused", "Paused"),
+    ("often", "Often")
 )
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
@@ -70,7 +71,7 @@ class Check(models.Model):
         return "%s@%s" % (self.code, settings.PING_EMAIL_DOMAIN)
 
     def send_alert(self):
-        if self.status not in ("up", "down"):
+        if self.status not in ("up", "down", "often"):
             raise NotImplementedError("Unexpected status: %s" % self.status)
 
         errors = []
@@ -86,6 +87,9 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
+        # define job running often
+        if (self.last_ping + self.timeout) - self.grace > now:
+            return "often"
 
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
@@ -99,6 +103,16 @@ class Check(models.Model):
         up_ends = self.last_ping + self.timeout
         grace_ends = up_ends + self.grace
         return up_ends < timezone.now() < grace_ends
+
+#define reversed grace period
+    def reversed_grace_period(self):
+        if self.status in ("new", "paused"):
+            return False
+
+        up_ends = self.last_ping + self.timeout
+        reversed_grace_begins = up_ends - self.grace
+        # return up_ends > timezone.now() < reversed_grace_begins
+        return reversed_grace_begins < timezone.now() < up_ends
 
     def assign_all_channels(self):
         if self.user:
