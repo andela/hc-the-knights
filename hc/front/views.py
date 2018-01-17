@@ -32,28 +32,25 @@ def pairwise(iterable):
 def my_checks(request):
     q = Check.objects.filter(user=request.team.user).order_by("created")
     checks = list(q)
-
+    g_checks = []
     counter = Counter()
-    down_tags, grace_tags = set(), set()
+    grace_tags = set()
     for check in checks:
         status = check.get_status()
-        for tag in check.tags_list():
-            if tag == "":
-                continue
-
-            counter[tag] += 1
-
-            if status == "down":
-                down_tags.add(tag)
-            elif check.in_grace_period():
-                grace_tags.add(tag)
-
+        if status != "down":
+            for tag in check.tags_list():
+                if tag == "":
+                    continue
+                counter[tag] += 1
+                if check.in_grace_period():
+                    grace_tags.add(tag)
+        
+            g_checks.append(check)
     ctx = {
         "page": "checks",
-        "checks": checks,
+        "checks": g_checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
-        "down_tags": down_tags,
         "grace_tags": grace_tags,
         "ping_endpoint": settings.PING_ENDPOINT
     }
