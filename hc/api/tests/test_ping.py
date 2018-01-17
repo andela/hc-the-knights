@@ -14,7 +14,7 @@ class PingTestCase(TestCase):
         assert r.status_code == 200
 
         self.check.refresh_from_db()
-        assert self.check.status == "up"
+        assert self.check.status == "often"
 
         ping = Ping.objects.latest("id")
         assert ping.scheme == "http"
@@ -78,7 +78,7 @@ class PingTestCase(TestCase):
         self.check.save()
         self.client.get("/ping/%s/" % self.check.code)
         self.check.refresh_from_db()
-        self.assertEqual(self.check.status, "up")
+        self.assertEqual(self.check.status, "often")
 
     # Test that a post to a ping works
     def test_post_to_ping_works(self):
