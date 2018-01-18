@@ -108,17 +108,6 @@ class Check(models.Model):
         grace_ends = up_ends + self.grace
         return up_ends < timezone.now() < grace_ends
 
-#define reversed grace period
-    # def reversed_grace_period(self):
-    #     if self.status in ("new", "paused"):
-    #         return False
-    #
-    #     up_ends = self.last_ping + self.timeout
-    #     reversed_grace_begins = up_ends - self.grace
-    #     # return up_ends > timezone.now() < reversed_grace_begins
-    #     # return reversed_grace_begins < timezone.now() < up_ends
-    #     return up_ends > timezone.now() < reversed_grace_begins
-
     def assign_all_channels(self):
         if self.user:
             channels = Channel.objects.filter(user=self.user)
