@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/andela/hc-the-knights.svg?branch=develop)](https://travis-ci.org/andela/hc-the-knights)
 [![Coverage Status](https://coveralls.io/repos/github/andela/hc-the-knights/badge.svg?branch=develop)](https://coveralls.io/github/andela/hc-the-knights?branch=develop)
-[![Build Status](https://travis-ci.org/andela/hc-the-knights.svg?branch=develop)](https://travis-ci.org/andela/hc-the-knights)
+[![CircleCI](https://circleci.com/gh/andela/hc-the-knights.svg?style=svg)](https://circleci.com/gh/andela/hc-the-knights)
+
 # healthchecks knights
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
@@ -13,12 +14,12 @@
 
 healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.
 
-It is live here: [http://healthchecks.io/](http://healthchecks.io/)
+It is live here: [HC-THE-KNIGHTS-Healthchecks](https://hc-the-knights.herokuapp.com/)
 
 The building blocks are:
 
-* Python 2 or Python 3
-* Django 1.9
+* Python 3
+* Django 1.11
 * PostgreSQL or MySQL
 
 ## Setting Up for Development
@@ -39,11 +40,11 @@ in development environment.
 
 * check out project code:
 
-        $ git clone https://github.com/healthchecks/healthchecks.git
+        $ git clone https://github.com/andela/hc-the-knights.git
 
 * install requirements (Django, ...) into virtualenv:
 
-        $ pip install -r healthchecks/requirements.txt
+        $ pip install -r hc-the-knights/requirements.txt
 
 * make sure PostgreSQL server is installed and running, create
   database "hc":
@@ -53,7 +54,7 @@ in development environment.
 
 * create database tables, triggers, superuser:
 
-        $ cd ~/webapps/healthchecks
+        $ cd ~/webapps/hc-the-knights
         $ ./manage.py migrate
         $ ./manage.py ensuretriggers
         $ ./manage.py createsuperuser
