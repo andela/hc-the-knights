@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/andela/hc-the-knights.svg?branch=develop)](https://travis-ci.org/andela/hc-the-knights)
 [![Coverage Status](https://coveralls.io/repos/github/andela/hc-the-knights/badge.svg?branch=develop)](https://coveralls.io/github/andela/hc-the-knights?branch=develop)
 [![CircleCI](https://circleci.com/gh/andela/hc-the-knights.svg?style=svg)](https://circleci.com/gh/andela/hc-the-knights)
 
