@@ -20,7 +20,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'hc-the-knights.herokuapp.com', 'yummy-recipies-api.herokuapp.com']
+                 'hc-the-knights.herokuapp.com', 'the-knights.herokuapp.com']
 DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
 USE_PAYMENTS = False
 
