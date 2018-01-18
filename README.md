@@ -1,5 +1,6 @@
+[![Build Status](https://travis-ci.org/andela/hc-the-knights.svg?branch=develop)](https://travis-ci.org/andela/hc-the-knights)
 [![Coverage Status](https://coveralls.io/repos/github/andela/hc-the-knights/badge.svg?branch=develop)](https://coveralls.io/github/andela/hc-the-knights?branch=develop)
-
+[![Build Status](https://travis-ci.org/andela/hc-the-knights.svg?branch=develop)](https://travis-ci.org/andela/hc-the-knights)
 # healthchecks knights
 
 ![Screenshot of Welcome page](/stuff/screenshots/welcome.png?raw=true "Welcome Page")
