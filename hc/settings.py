@@ -146,6 +146,12 @@ STATICFILES_FINDERS = (
 COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_POST = 587
+EMAIL_HOST_USER =  "hctheknights@gmail.com"
+EMAIL_HOST_PASSWORD = "hctk12345"
+EMAIL_USE_TLS = True
 
 # Slack integration -- override these in local_settings
 SLACK_CLIENT_ID = None
