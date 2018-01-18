@@ -22,19 +22,26 @@ def ping(request, code):
         return HttpResponseBadRequest()
 
     check.n_pings = F("n_pings") + 1
+    if check.last_ping:
+        # To cater for the edge cases where timeout and grace time are equal
+        if (check.timeout == check.grace) and \
+                        (timezone.now() - check.last_ping) < check.timeout:
+            check.often = True
+            check.send_often_alert()
+        elif check.last_ping < timezone.now() and \
+                        (check.last_ping + check.timeout - check.grace) > timezone.now():
+            check.often = True
+            check.send_often_alert()
+        else:
+            check.often = False
+
     check.last_ping = timezone.now()
     if check.status in ("new", "paused"):
         check.status = "up"
-    #getting the often status from get_status function
-    if check.get_status() == "often":
-        check.status = check.get_status()
+
     check.save()
     check.refresh_from_db()
 
-    if check.status == "often":
-        check.send_alert()
-    if check.status == "down":
-        check.send_alert()
     ping = Ping(owner=check)
     headers = request.META
     ping.n = check.n_pings
@@ -49,7 +56,6 @@ def ping(request, code):
     response = HttpResponse("OK")
     response["Access-Control-Allow-Origin"] = "*"
     return response
-
 
 @csrf_exempt
 @check_api_key
@@ -113,16 +119,11 @@ def badge(request, username, signature, tag):
         if status == "up" and check.in_grace_period():
             status = "late"
 
-        if status == "up" and check.reversed_grace_period():
+        if check.get_status == 'up':
             status = "often"
-
 
         if check.get_status() == "down":
             status = "down"
-            break
-
-        if check.get_status() == "often":
-            status = "often"
             break
 
     svg = get_badge_svg(tag, status)

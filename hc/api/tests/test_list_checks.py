@@ -26,7 +26,7 @@ class ListChecksTestCase(BaseTestCase):
         self.a2.timeout = td(seconds=86400)
         self.a2.grace = td(seconds=3600)
         self.a2.last_ping = self.now
-        self.a2.status = "often"
+        self.a2.status = "up"
         self.a2.save()
 
     def get(self):

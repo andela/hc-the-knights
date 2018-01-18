@@ -29,7 +29,7 @@
                         <span class="label label-default">PAUSED</span>
                     {% elif check.in_grace_period %}
                         <span class="label label-warning">LATE</span>
-                    {% elif check.reversed_grace_period %}
+                    {% elif check.get_status %}
                         <span class="label label-danger">OFTEN</span>
                     {% elif check.get_status == "up" %}
                         <span class="label label-success">UP</span>

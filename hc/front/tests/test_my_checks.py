@@ -26,7 +26,7 @@ class MyChecksTestCase(BaseTestCase):
         r = self.client.get("/checks/")
 
         # Desktop
-        self.assertContains(r, "icon-often")
+        self.assertContains(r, "icon-up")
 
         # Mobile
         self.assertContains(r, "label-danger")
