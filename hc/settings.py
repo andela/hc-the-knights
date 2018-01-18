@@ -21,7 +21,7 @@ SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
                  'hc-the-knight.herokuapp.com']
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+DEFAULT_FROM_EMAIL = 'healthchecks@gmail.com'
 USE_PAYMENTS = False
 
 
@@ -112,13 +112,13 @@ if os.environ.get("DB") == "mysql":
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
- 
-if os.environ.get("HEROKU") == "TRUE":
-  STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 if os.environ.get("HEROKU") == "TRUE":
-  db_from_env = dj_database_url.config()
-  DATABASES[default].update(db_from_env)
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+if os.environ.get("HEROKU") == "TRUE":
+    db_from_env = dj_database_url.config()
+    DATABASES[default].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -146,6 +146,14 @@ STATICFILES_FINDERS = (
 COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
+DJMAIL_REAL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'hctheknights@gmail.com'
+EMAIL_HOST_PASSWORD = "hctk12345"
+EMAIL_USE_TLS = True
+
 
 # Slack integration -- override these in local_settings
 SLACK_CLIENT_ID = None

@@ -31,6 +31,7 @@
             {% if ch.kind == "webhook" %} Webhook {% endif %}
             {% if ch.kind == "slack" %} Slack {% endif %}
             {% if ch.kind == "hipchat" %} HipChat {% endif %}
+            {% if ch.kind == "sms" %} SMS {% endif %}
             {% if ch.kind == "pd" %} PagerDuty {% endif %}
             {% if ch.kind == "po" %} Pushover {% endif %}
             {% if ch.kind == "victorops" %} VictorOps {% endif %}
@@ -169,6 +170,15 @@
             <p>Group and private chat, file sharing, and integrations.</p>
 
             <a href="{% url 'hc-add-hipchat' %}" class="btn btn-primary">Add Integration</a>
+        </li>
+        <li>
+            <img src="{% static 'img/integrations/hipchat.png' %}"
+                class="icon" alt="SMS icon" />
+
+            <h2>SMS</h2>
+            <p>Send sms notifications to a phone number</p>
+
+            <a href="{% url 'hc-add-sms' %}" class="btn btn-primary">Add Integration</a>
         </li>
         <li>
             <img src="{% static 'img/integrations/victorops.png' %}"
