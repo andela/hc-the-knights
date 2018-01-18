@@ -31,6 +31,8 @@
                         <span class="label label-warning">LATE</span>
                     {% elif check.get_status == "up" %}
                         <span class="label label-success">UP</span>
+                    {% elif check.nag_status == True %}
+                        <span class="label label-danger">DOWN - NAG MODE</span>
                     {% elif check.get_status == "down" %}
                         <span class="label label-danger">DOWN</span>
                     {% endif %}
