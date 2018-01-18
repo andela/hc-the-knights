@@ -32,34 +32,58 @@ def pairwise(iterable):
 def my_checks(request):
     q = Check.objects.filter(user=request.team.user).order_by("created")
     checks = list(q)
-
+    g_checks = []
     counter = Counter()
-    down_tags, grace_tags = set(), set()
+    grace_tags = set()
     for check in checks:
         status = check.get_status()
-        for tag in check.tags_list():
-            if tag == "":
-                continue
-
-            counter[tag] += 1
-
-            if status == "down":
-                down_tags.add(tag)
-            elif check.in_grace_period():
-                grace_tags.add(tag)
-
+        if status != "down":
+            for tag in check.tags_list():
+                if tag == "":
+                    continue
+                counter[tag] += 1
+                if check.in_grace_period():
+                    grace_tags.add(tag)
+        
+            g_checks.append(check)
     ctx = {
         "page": "checks",
-        "checks": checks,
+        "checks": g_checks,
         "now": timezone.now(),
         "tags": counter.most_common(),
-        "down_tags": down_tags,
         "grace_tags": grace_tags,
         "ping_endpoint": settings.PING_ENDPOINT
     }
 
     return render(request, "front/my_checks.html", ctx)
 
+def unresolved_checks(request):
+    unresolved_checks = Check.objects.filter(user=request.team.user)
+    checks = list(unresolved_checks)
+    counter = Counter()
+    failed = []
+    down_tags = set()
+    for check in checks:
+        status = check.get_status()
+        for tag in check.tags_list():
+            if tag == "":
+                continue
+            counter[tag] += 1
+
+            if status == "down":
+                down_tags.add(tag)
+        if status == "down":
+            failed.append(check)
+
+    ctx = {
+        "page": "unresolved checks",
+        "checks": failed,
+        "now": timezone.now(),
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+    return render(request, "front/unresolved_checks.html", ctx)
 
 def _welcome_check(request):
     check = None
