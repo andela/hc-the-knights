@@ -4,7 +4,8 @@ $(function () {
     var HOUR = {name: "hour", nsecs: MINUTE.nsecs * 60};
     var DAY = {name: "day", nsecs: HOUR.nsecs * 24};
     var WEEK = {name: "week", nsecs: DAY.nsecs * 7};
-    var UNITS = [WEEK, DAY, HOUR, MINUTE];
+    var MONTH = { name: "month", nsecs: (WEEK.nsecs * 4 + (HOUR.nsecs * 24 * 2)) };
+    var UNITS = [MONTH, WEEK, DAY, HOUR, MINUTE];
 
     var secsToText = function(total) {
         var remainingSeconds = Math.floor(total);
@@ -39,12 +40,12 @@ $(function () {
             '33%': [3600, 3600],
             '66%': [86400, 86400],
             '83%': [604800, 604800],
-            'max': 2592000,
+            'max': 5184000,
         },
         pips: {
             mode: 'values',
-            values: [60, 1800, 3600, 43200, 86400, 604800, 2592000],
-            density: 4,
+            values: [60, 1800, 3600, 43200, 86400, 604800, 5184000],
+            density: 5,
             format: {
                 to: secsToText,
                 from: function() {}
@@ -68,11 +69,11 @@ $(function () {
             '33%': [3600, 3600],
             '66%': [86400, 86400],
             '83%': [604800, 604800],
-            'max': 2592000,
+            'max': 5184000,
         },
         pips: {
             mode: 'values',
-            values: [60, 1800, 3600, 43200, 86400, 604800, 2592000],
+            values: [60, 1800, 3600, 43200, 86400, 604800, 5184000],
             density: 4,
             format: {
                 to: secsToText,
