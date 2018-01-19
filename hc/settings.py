@@ -91,6 +91,14 @@ DATABASES = {
     }
 }
 
+
+# Check If App Is On Heroku
+if os.environ.get('DATABASE_URL'):
+    db_from_env  = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
+    DATABASES['default']['CONN_MAX_AGE'] = 400
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
 if os.environ.get("DB") == "postgres":
@@ -112,13 +120,7 @@ if os.environ.get("DB") == "mysql":
             'TEST': {'CHARSET': 'UTF8'}
         }
     }
- 
-if os.environ.get("HEROKU") == "TRUE":
-  STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-if os.environ.get("HEROKU") == "TRUE":
-  db_from_env = dj_database_url.config()
-  DATABASES[default].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
