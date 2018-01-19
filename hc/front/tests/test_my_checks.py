@@ -29,7 +29,7 @@ class MyChecksTestCase(BaseTestCase):
         self.assertContains(r, "icon-up")
 
         # Mobile
-        self.assertContains(r, "label-success")
+        self.assertContains(r, "label-danger")
 
     def test_it_shows_red_check(self):
         self.check.last_ping = timezone.now() - td(days=3)

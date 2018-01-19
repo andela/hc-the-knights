@@ -22,6 +22,19 @@ def ping(request, code):
         return HttpResponseBadRequest()
 
     check.n_pings = F("n_pings") + 1
+    if check.last_ping:
+        # To cater for the edge cases where timeout and grace time are equal
+        if (check.timeout == check.grace) and \
+                        (timezone.now() - check.last_ping) < check.timeout:
+            check.often = True
+            check.send_often_alert()
+        elif check.last_ping < timezone.now() and \
+                        (check.last_ping + check.timeout - check.grace) > timezone.now():
+            check.often = True
+            check.send_often_alert()
+        else:
+            check.often = False
+
     check.last_ping = timezone.now()
     if check.status in ("new", "paused"):
         check.status = "up"
@@ -43,7 +56,6 @@ def ping(request, code):
     response = HttpResponse("OK")
     response["Access-Control-Allow-Origin"] = "*"
     return response
-
 
 @csrf_exempt
 @check_api_key
@@ -106,6 +118,9 @@ def badge(request, username, signature, tag):
 
         if status == "up" and check.in_grace_period():
             status = "late"
+
+        if check.get_status == 'up':
+            status = "often"
 
         if check.get_status() == "down":
             status = "down"
