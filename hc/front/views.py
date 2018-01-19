@@ -461,6 +461,12 @@ def add_hipchat(request):
 
 
 @login_required
+def add_sms(request):
+    ctx = {"page": "channels"}
+    return render(request, "integrations/add_sms.html", ctx)
+
+
+@login_required
 def add_pushbullet(request):
     if settings.PUSHBULLET_CLIENT_ID is None:
         raise Http404("pushbullet integration is not available")
