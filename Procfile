@@ -1,2 +1,1 @@
-release: python manage.py migrate
-web: gunicorn hc.wsgi
+web: python manage.py makemigrations & python manage.py migrate & gunicorn hc.wsgi --log-file -

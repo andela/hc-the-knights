@@ -14,7 +14,7 @@
 
 healthchecks is a watchdog for your cron jobs. It's a web server that listens for pings from your cron jobs, plus a web interface.
 
-It is live here: [HC-THE-KNIGHTS-Healthchecks](https://hc-the-knights.herokuapp.com/)
+It is live here: [HC-THE-KNIGHTS-Healthchecks](https://hc-the-knight.herokuapp.com/)
 
 The building blocks are:
 
@@ -111,8 +111,6 @@ configuration from environment variables like so:
         }
     }
 
-
-
 ## Sending Emails
 
 healthchecks must be able to send email messages, so it can send out login
@@ -153,38 +151,38 @@ There are separate Django management commands for each task:
 * Remove old records from `api_ping` table. For each check, keep 100 most
   recent pings:
 
-    ````
-    $ ./manage.py prunepings
-    ````
+  ```
+  $ ./manage.py prunepings
+  ```
 
 * Remove checks older than 2 hours that are not assigned to users. Such
   checks are by-products of random visitors and robots loading the welcome
   page and never setting up an account:
 
-    ```
-    $ ./manage.py prunechecks
-    ```
+  ```
+  $ ./manage.py prunechecks
+  ```
 
 * Remove records of sent email messages older than 7 days.
 
-    ````
-    $ ./manage.py pruneemails
-    ````
+  ```
+  $ ./manage.py pruneemails
+  ```
 
 * Remove user accounts that match either of these conditions:
- * Account was created more than a month ago, and user has never logged in.
-   These can happen when user enters invalid email address when signing up.
- * Last login was more than a month ago, and the account has no checks.
-   Assume the user doesn't intend to use the account any more and would
-   probably *want* it removed.
+* Account was created more than a month ago, and user has never logged in.
+  These can happen when user enters invalid email address when signing up.
+* Last login was more than a month ago, and the account has no checks.
+  Assume the user doesn't intend to use the account any more and would
+  probably _want_ it removed.
 
-    ```
-    $ ./manage.py pruneusers
-    ```    
+  ```
+  $ ./manage.py pruneusers
+  ```
 
-When you first try these commands on your data, it is a good idea to 
-test them on a copy of your database, not on the live database right away. 
-In a production setup, you should also have regular, automated database 
+When you first try these commands on your data, it is a good idea to
+test them on a copy of your database, not on the live database right away.
+In a production setup, you should also have regular, automated database
 backups set up.
 
 ## Integrations
