@@ -114,7 +114,7 @@ if os.environ.get("DB") == "mysql":
     }
 
 
-if os.environ.get('DATABASE_URL') == "TRUE":
+if os.environ.get('HEROKU') == "TRUE":
     db_from_env = dj_database_url.config()
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     DATABASES['default'].update(db_from_env)
