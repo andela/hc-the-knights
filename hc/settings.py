@@ -113,10 +113,10 @@ if os.environ.get("DB") == "mysql":
         }
     }
 
-if os.environ.get("HEROKU") == "TRUE":
+if os.environ.get('DATABASE_URL') == "TRUE":
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-if os.environ.get("HEROKU") == "TRUE":
+if os.environ.get('DATABASE_URL') == "TRUE":
   db_from_env = dj_database_url.config()
   DATABASES['default'].update(db_from_env)
 
@@ -147,19 +147,11 @@ STATICFILES_FINDERS = (
 
 COMPRESS_OFFLINE = True
 
-# EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
-# EMAIL_HOST = "your-smtp-server-here.com"
-# EMAIL_PORT = 587
-# EMAIL_HOST_USER = "username"
-# EMAIL_HOST_PASSWORD = "password"
-# EMAIL_USE_TLS = True
-
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
-DJMAIL_REAL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-
+DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'hctheknights@gmail.com'
+EMAIL_POST = 587
+EMAIL_HOST_USER =  "hctheknights@gmail.com"
 EMAIL_HOST_PASSWORD = "hctk12345"
 EMAIL_USE_TLS = True
 

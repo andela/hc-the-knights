@@ -26,6 +26,8 @@
                 <span class="glyphicon glyphicon-hourglass"></span>
             {% elif check.get_status == "up" %}
                 <span class="status icon-up"></span>
+            {% elif check.nag_status == True %}
+                <span class="status icon-missing"></span>
             {% elif check.get_status == "down" %}
                 <span class="status icon-down"></span>
             {% endif %}
