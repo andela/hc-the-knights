@@ -1,2 +1,2 @@
 release: python manage.py migrate
-web: gunicorn hc.wsgi --preload
+web: gunicorn hc.wsgi
