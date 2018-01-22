@@ -113,12 +113,12 @@ if os.environ.get("DB") == "mysql":
         }
     }
 
-if os.environ.get('DATABASE_URL') == "TRUE":
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 if os.environ.get('DATABASE_URL') == "TRUE":
-  db_from_env = dj_database_url.config()
-  DATABASES['default'].update(db_from_env)
+    db_from_env = dj_database_url.config()
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    DATABASES['default'].update(db_from_env)
+
 
 LANGUAGE_CODE = 'en-us'
 
@@ -130,9 +130,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000"
+SITE_ROOT = "hc-the-knight.herokuapp.com"
 
-DEFAULT_FROM_EMAIL = "hc-logros-infinitos@affiance.ug" #delete the whole thing
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
@@ -149,15 +148,15 @@ COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
 DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_POST = 587
-EMAIL_HOST_USER =  "hctheknights@gmail.com"
-EMAIL_HOST_PASSWORD = "hctk12345"
-EMAIL_USE_TLS = True
+EMAIL_HOST = os.environ['EMAIL_HOST']
+EMAIL_PORT = os.environ['EMAIL_PORT']
+EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
 
 # Slack integration -- override these in local_settings
-SLACK_CLIENT_ID = None
-SLACK_CLIENT_SECRET = None
+SLACK_CLIENT_ID = os.environ['SLACK_CLIENT_ID']
+SLACK_CLIENT_SECRET = os.environ['SLACK_CLIENT_SECRET']
 
 # Pushover integration -- override these in local_settings
 PUSHOVER_API_TOKEN = None
@@ -168,6 +167,11 @@ PUSHOVER_EMERGENCY_EXPIRATION = 86400
 # Pushbullet integration -- override these in local_settings
 PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
+
+# Twilio
+TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
+TWILIO_AUTH_TOKEN = os.environ['TWILIO_AUTH_TOKEN']
+TWILIO_NUMBER = os.environ['TWILIO_NUMBER']
 
 if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
     from .local_settings import *
