@@ -84,17 +84,17 @@ TEST_RUNNER = 'hc.api.tests.CustomRunner'
 
 # Default database engine is SQLite. So one can just check out code,
 # install requirements.txt and do manage.py runserver and it works
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME':   './hc.sqlite',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':   './hc.sqlite',
+    }
+}
 
 if os.getenv('DATABASE_URL'):
     db_from_env = dj_database_url.config()
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-    # DATABASES['default'].update(db_from_env)
+    DATABASES['default'].update(db_from_env)
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
