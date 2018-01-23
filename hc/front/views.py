@@ -44,7 +44,7 @@ def my_checks(request):
                 counter[tag] += 1
                 if check.in_grace_period():
                     grace_tags.add(tag)
-        
+
             g_checks.append(check)
     ctx = {
         "page": "checks",
@@ -56,6 +56,7 @@ def my_checks(request):
     }
 
     return render(request, "front/my_checks.html", ctx)
+
 
 def unresolved_checks(request):
     unresolved_checks = Check.objects.filter(user=request.team.user)
@@ -84,6 +85,7 @@ def unresolved_checks(request):
         "ping_endpoint": settings.PING_ENDPOINT
     }
     return render(request, "front/unresolved_checks.html", ctx)
+
 
 def _welcome_check(request):
     check = None
@@ -144,6 +146,10 @@ def docs_api(request):
 
 def about(request):
     return render(request, "front/about.html", {"page": "about"})
+
+
+def guide(request):
+    return render(request, "front/guide.html", {"page": "guide"})
 
 
 @login_required

@@ -32,7 +32,8 @@ channel_urls = [
 urlpatterns = [
     url(r'^$', views.index, name="hc-index"),
     url(r'^checks/$', views.my_checks, name="hc-checks"),
-    url(r'^checks/unresolved$', views.unresolved_checks, name="hc-unresovled-checks"),
+    url(r'^checks/unresolved$', views.unresolved_checks,
+        name="hc-unresovled-checks"),
     url(r'^checks/add/$', views.add_check, name="hc-add-check"),
     url(r'^checks/([\w-]+)/', include(check_urls)),
     url(r'^integrations/', include(channel_urls)),
@@ -40,6 +41,7 @@ urlpatterns = [
     url(r'^docs/$', views.docs, name="hc-docs"),
     url(r'^docs/api/$', views.docs_api, name="hc-docs-api"),
     url(r'^about/$', views.about, name="hc-about"),
+    url(r'^guide/$', views.guide, name="hc-guide"),
     url(r'^privacy/$', views.privacy, name="hc-privacy"),
     url(r'^terms/$', views.terms, name="hc-terms"),
 ]
