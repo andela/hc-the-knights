@@ -117,8 +117,8 @@ if os.environ.get('DATABASE_URL') == "TRUE":
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 if os.environ.get('DATABASE_URL') == "TRUE":
-  db_from_env = dj_database_url.config()
-  DATABASES['default'].update(db_from_env)
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -130,9 +130,8 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:8000"
+SITE_ROOT = "http://localhost:5000"
 
-DEFAULT_FROM_EMAIL = "hc-logros-infinitos@affiance.ug" #delete the whole thing
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
 STATIC_URL = '/static/'
@@ -151,7 +150,7 @@ EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
 DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_POST = 587
-EMAIL_HOST_USER =  "hctheknights@gmail.com"
+EMAIL_HOST_USER = "hctheknights@gmail.com"
 EMAIL_HOST_PASSWORD = "hctk12345"
 EMAIL_USE_TLS = True
 

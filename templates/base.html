@@ -101,6 +101,7 @@
                 <li {% if page == 'about' %} class="active" {% endif %}>
                     <a href="{% url 'hc-about' %}">About</a>
                 </li>
+
                 <li {% if page == 'guide' %} class="active" {% endif %}>
                     <a href="{% url 'hc-guide' %}">User guide</a>
                 </li>
@@ -164,6 +165,7 @@
                 {% if show_pricing %}
                 <li><a href="{% url 'hc-pricing' %}">Pricing</a></li>
                 {% endif %}
+                <li><a href="{% url 'hc-guide' %}">Help Center/a></li>
                 <li><a href="{% url 'hc-about' %}">Contact</a></li>
             </ul>
         </div>
