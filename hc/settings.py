@@ -86,12 +86,12 @@ TEST_RUNNER = 'hc.api.tests.CustomRunner'
 # install requirements.txt and do manage.py runserver and it works
 DATABASES = {
     'default': {
-        'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     'hc'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME':   './hc.sqlite',
     }
 }
 
-if os.getenv('DATABASE_URL') == "TRUE":
+if os.getenv('DATABASE_URL'):
     db_from_env = dj_database_url.config()
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     DATABASES['default'].update(db_from_env)
