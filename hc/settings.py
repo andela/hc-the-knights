@@ -20,7 +20,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'the-black-knight-hc.herokuapp.com']
+                 'hc-the-knight.herokuapp.com']
 DEFAULT_FROM_EMAIL = 'healthchecks@gmail.com'
 USE_PAYMENTS = False
 
@@ -93,7 +93,7 @@ DATABASES = {
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
-if os.environ.get("DB") == "postgres":
+if os.getenv("DB") == "postgres":
     DATABASES = {
         'default': {
             'ENGINE':   'django.db.backends.postgresql',
@@ -103,7 +103,7 @@ if os.environ.get("DB") == "postgres":
         }
     }
 
-if os.environ.get("DB") == "mysql":
+if os.getenv("DB") == "mysql":
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -114,7 +114,7 @@ if os.environ.get("DB") == "mysql":
     }
 
 
-if os.environ.get('HEROKU') == "TRUE":
+if os.getenv('DATABASE_URL') == "TRUE":
     db_from_env = dj_database_url.config()
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     DATABASES['default'].update(db_from_env)
@@ -130,7 +130,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "the-black-knight-hc.herokuapp.com"
+SITE_ROOT = "hc-the-knight.herokuapp.com"
 
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
@@ -148,15 +148,15 @@ COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
 DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.environ['EMAIL_HOST']
-EMAIL_PORT = os.environ['EMAIL_PORT']
-EMAIL_HOST_USER = os.environ['EMAIL_HOST_USER']
-EMAIL_HOST_PASSWORD = os.environ['EMAIL_HOST_PASSWORD']
-EMAIL_USE_TLS = os.environ['EMAIL_USE_TLS']
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 # Slack integration -- override these in local_settings
-SLACK_CLIENT_ID = os.environ['SLACK_CLIENT_ID']
-SLACK_CLIENT_SECRET = os.environ['SLACK_CLIENT_SECRET']
+SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
 
 # Pushover integration -- override these in local_settings
 PUSHOVER_API_TOKEN = None
@@ -169,9 +169,9 @@ PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
 # Twilio
-TWILIO_ACCOUNT_SID = os.environ['TWILIO_ACCOUNT_SID']
-TWILIO_AUTH_TOKEN = os.environ['TWILIO_AUTH_TOKEN']
-TWILIO_NUMBER = os.environ['TWILIO_NUMBER']
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_NUMBER = os.getenv('TWILIO_NUMBER')
 
 if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
     from .local_settings import *
