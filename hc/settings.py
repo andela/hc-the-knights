@@ -91,7 +91,7 @@ DATABASES = {
     }
 }
 
-if os.getenv('DATABASE_URL') == TRUE:
+if os.getenv('DATABASE_URL') == "TRUE":
     db_from_env = dj_database_url.config()
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
     DATABASES['default'].update(db_from_env)
