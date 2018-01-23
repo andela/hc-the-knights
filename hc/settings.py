@@ -91,6 +91,11 @@ DATABASES = {
     }
 }
 
+if os.getenv('DATABASE_URL') == "TRUE":
+    db_from_env = dj_database_url.config()
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    DATABASES['default'].update(db_from_env)
+
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
 if os.getenv("DB") == "postgres":
@@ -103,21 +108,21 @@ if os.getenv("DB") == "postgres":
         }
     }
 
-if os.getenv("DB") == "mysql":
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'USER':     'root',
-            'NAME':     'hc',
-            'TEST': {'CHARSET': 'UTF8'}
-        }
-    }
+# if os.getenv("DB") == "mysql":
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.mysql',
+#             'USER':     'root',
+#             'NAME':     'hc',
+#             'TEST': {'CHARSET': 'UTF8'}
+#         }
+#     }
 
 
-if os.getenv('DATABASE_URL') == "TRUE":
-    db_from_env = dj_database_url.config()
-    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-    DATABASES['default'].update(db_from_env)
+# if os.getenv('DATABASE_URL') == "TRUE":
+#     db_from_env = dj_database_url.config()
+#     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+#     DATABASES['default'].update(db_from_env)
 
 
 LANGUAGE_CODE = 'en-us'
@@ -155,8 +160,8 @@ EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 # Slack integration -- override these in local_settings
-SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
-SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
+# SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
+# SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
 
 # Pushover integration -- override these in local_settings
 PUSHOVER_API_TOKEN = None
