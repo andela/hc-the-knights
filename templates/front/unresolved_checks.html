@@ -9,9 +9,7 @@
     <div class="col-sm-12">
         <h1>
         {% if request.team == request.user.profile %}
-            My Checks
-        {% else %}
-            {{ request.team.team_name }}
+            Uresolved Checks
         {% endif %}
         </h1>
     </div>
@@ -24,7 +22,7 @@
         {% endfor %}
     </div>
     {% endif %}
-
+    
 </div>
 <div class="row">
     <div class="col-sm-12">
