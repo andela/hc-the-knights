@@ -35,12 +35,14 @@
         <td class="name-cell">
             <div data-name="{{ check.name }}"
                     data-tags="{{ check.tags }}"
+                    data-departments="{{ check.department }}"
                     data-url="{% url 'hc-update-name' check.code %}"
                     class="my-checks-name {% if not check.name %}unnamed{% endif %}">
                 <div>{{ check.name|default:"unnamed" }}</div>
                 {% for tag in check.tags_list %}
                 <span class="label label-tag">{{ tag }}</span>
                 {% endfor %}
+                <span class="label label-tag">{{ check.check_department}}</span>
             </div>
         </td>
         <td class="url-cell">
