@@ -28,7 +28,19 @@
         {% endfor %}
     </div>
     {% endif %}
-
+    {% if departments %}
+    <div class="col-sm-12">
+        <label>Departments</label>
+        {% for department in departments %}
+                {% if department == '' %}
+                {% else %}
+            <form style ="display: inline;" action="{% url 'hc-departments' dept=department|escape %}">
+                <input style="border-radius:10px;"type="submit" value="{{ department }}"/>
+            </form>
+                 {% endif %}
+        {% endfor %} 
+    </div>
+    {% endif %}
 </div>
 <div class="row">
     <div class="col-sm-12">
@@ -58,7 +70,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="update-timeout-title">Name and Tags</h4>
+                    <h4 class="update-timeout-title">Name and Tags and Department</h4>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
@@ -77,6 +89,23 @@
                                 <span class="help-block">
                                     Give this check a human-friendly name,
                                     so you can easily recognize it later.
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="update-department-input" class="col-sm-2 control-label">
+                                Department
+                            </label>
+                            <div class="col-sm-9">
+                                <input
+                                    id="update-department-input"
+                                    name="department"
+                                    type="text"
+                                    value="---"
+                                    placeholder= "Department"
+                                    class="form-control" />
+                                <span class="help-block">
+                                    Assign a department name for easy filtering
                                 </span>
                             </div>
                         </div>
