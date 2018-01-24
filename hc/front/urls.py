@@ -34,6 +34,7 @@ urlpatterns = [
     url(r'^checks/$', views.my_checks, name="hc-checks"),
     url(r'^checks/unresolved$', views.unresolved_checks, name="hc-unresovled-checks"),
     url(r'^checks/add/$', views.add_check, name="hc-add-check"),
+    url(r'^checks/department=(?P<dept>[-\w]+)', views.department_checks, name="hc-departments"),
     url(r'^checks/([\w-]+)/', include(check_urls)),
     url(r'^integrations/', include(channel_urls)),
 
