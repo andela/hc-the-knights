@@ -144,6 +144,19 @@ def docs_api(request):
     return render(request, "front/docs_api.html", ctx)
 
 
+def user_guide_api(request):
+    ctx = {
+        "page": "docs",
+        "section": "guide",
+        "SITE_ROOT": settings.SITE_ROOT,
+        "PING_ENDPOINT": settings.PING_ENDPOINT,
+        "default_timeout": int(DEFAULT_TIMEOUT.total_seconds()),
+        "default_grace": int(DEFAULT_GRACE.total_seconds())
+    }
+
+    return render(request, "front/user_guide.html", ctx)
+
+
 def about(request):
     return render(request, "front/about.html", {"page": "about"})
 
