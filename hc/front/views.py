@@ -126,7 +126,6 @@ def department_checks(request, dept):
 
     return render(request, "front/department_checks.html", ctx)
 
-
 def _welcome_check(request):
     check = None
     if "welcome_code" in request.session:
