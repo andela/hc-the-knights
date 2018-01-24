@@ -98,15 +98,15 @@ if os.getenv('DATABASE_URL') == "TRUE":
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
-# if os.getenv("DB") == "postgres":
-#     DATABASES = {
-#         'default': {
-#             'ENGINE':   'django.db.backends.postgresql',
-#             'NAME':     'hc',
-#             'USER':     'postgres',
-#             'TEST': {'CHARSET': 'UTF8'}
-#         }
-#     }
+if os.getenv("DB") == "postgres":
+    DATABASES = {
+        'default': {
+            'ENGINE':   'django.db.backends.postgresql',
+            'NAME':     'hc',
+            'USER':     'postgres',
+            'TEST': {'CHARSET': 'UTF8'}
+        }
+    }
 
 # if os.getenv("DB") == "mysql":
 #     DATABASES = {
