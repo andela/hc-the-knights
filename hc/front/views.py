@@ -34,9 +34,10 @@ def my_checks(request):
     checks = list(q)
     g_checks = []
     counter = Counter()
-    grace_tags = set()
+    departments, grace_tags = set(), set()
     for check in checks:
         status = check.get_status()
+        department = check.check_department()
         if status != "down":
             for tag in check.tags_list():
                 if tag == "":
@@ -46,10 +47,13 @@ def my_checks(request):
                     grace_tags.add(tag)
         
             g_checks.append(check)
+            if department != "":
+                departments.add(department)
     ctx = {
         "page": "checks",
         "checks": g_checks,
         "now": timezone.now(),
+        "departments": departments,
         "tags": counter.most_common(),
         "grace_tags": grace_tags,
         "ping_endpoint": settings.PING_ENDPOINT
@@ -58,32 +62,70 @@ def my_checks(request):
     return render(request, "front/my_checks.html", ctx)
 
 def unresolved_checks(request):
-    unresolved_checks = Check.objects.filter(user=request.team.user)
+    unresolved_checks = Check.objects.filter(user=request.team.user).order_by("created")
     checks = list(unresolved_checks)
     counter = Counter()
     failed = []
-    down_tags = set()
+    departments, down_tags = set(), set()
     for check in checks:
         status = check.get_status()
-        for tag in check.tags_list():
-            if tag == "":
-                continue
-            counter[tag] += 1
-
-            if status == "down":
-                down_tags.add(tag)
+        department = check.check_department()
         if status == "down":
+            for tag in check.tags_list():
+                if tag == "":
+                    continue
+                counter[tag] += 1
+
+                if status == "down":
+                    down_tags.add(tag)
+            if department != "":
+                departments.add(department)
             failed.append(check)
 
     ctx = {
         "page": "unresolved checks",
         "checks": failed,
         "now": timezone.now(),
+        "departments": departments,
         "tags": counter.most_common(),
         "down_tags": down_tags,
         "ping_endpoint": settings.PING_ENDPOINT
     }
     return render(request, "front/unresolved_checks.html", ctx)
+
+def department_checks(request, dept):
+    q = Check.objects.filter(user=request.team.user, department=dept).order_by("created")
+    checks = list(q)
+    counter = Counter()
+    departments,down_tags, grace_tags = set(), set(), set()
+    for check in checks:
+        status = check.get_status()
+        department = check.check_department()
+        departments.add(department)
+        for tag in check.tags_list():
+            if tag == "":
+                continue
+
+            counter[tag] += 1
+
+            if status == "down":
+                down_tags.add(tag)
+            elif check.in_grace_period():
+                grace_tags.add(tag)
+
+    ctx = {
+        "page": "checks",
+        "checks": checks,
+        "now": timezone.now(),
+        "departments": dept,
+        "tags": counter.most_common(),
+        "down_tags": down_tags,
+        "grace_tags": grace_tags,
+        "ping_endpoint": settings.PING_ENDPOINT
+    }
+
+    return render(request, "front/department_checks.html", ctx)
+
 
 def _welcome_check(request):
     check = None
@@ -171,6 +213,7 @@ def update_name(request, code):
     if form.is_valid():
         check.name = form.cleaned_data["name"]
         check.tags = form.cleaned_data["tags"]
+        check.department = form.cleaned_data['department']
         check.save()
 
     return redirect("hc-checks")
