@@ -9,9 +9,7 @@
     <div class="col-sm-12">
         <h1>
         {% if request.team == request.user.profile %}
-            My Checks
-        {% else %}
-            {{ request.team.team_name }}
+           {{ departments }} Checks
         {% endif %}
         </h1>
     </div>
@@ -29,9 +27,9 @@
     </div>
     {% endif %}
     <div class="col-sm-12">
-            <form style ="display: inline;" action="{% url 'hc-checks' %}">
-                    <input style="border-radius:10px;"type="submit" value="{{ departments }} Department"/>
-            </form>  
+            <a style ="display: inline;" href="{% url 'hc-checks' %}">
+                    <input style="border-radius:10px;"type="submit" value="Back To All Checks"/>
+            </a>  
     </div>
     
 </div>
