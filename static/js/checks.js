@@ -124,8 +124,6 @@ $(function () {
 
         return false;
     });
-    
-    
     $("#my-checks-tags button").click(function() {
         // .active has not been updated yet by bootstrap code,
         // so cannot use it
