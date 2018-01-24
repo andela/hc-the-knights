@@ -148,10 +148,6 @@ def about(request):
     return render(request, "front/about.html", {"page": "about"})
 
 
-def guide(request):
-    return render(request, "front/guide.html", {"page": "guide"})
-
-
 @login_required
 def add_check(request):
     assert request.method == "POST"
