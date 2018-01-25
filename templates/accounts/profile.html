@@ -276,9 +276,9 @@
                 <div class="form-group">
                     <label for="itm-check" class="col-sm-2 control-label">Check(s)</label>
                     <div class="col-sm-9">
-                        <select class="form-control" id="sel2">
+                        <select name="check" class="form-control" id="sel2">
                             {% for check in checks %}
-                                <option>{{check.name}}</option>
+                                <option value="{{check.name}}">{{check.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
