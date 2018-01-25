@@ -144,7 +144,7 @@ def docs_api(request):
     return render(request, "front/docs_api.html", ctx)
 
 
-def user_guide_api(request):
+def user_guide(request):
     ctx = {
         "page": "docs",
         "section": "guide",
