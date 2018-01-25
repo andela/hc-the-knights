@@ -140,6 +140,9 @@ def profile(request):
         profile.current_team_id = profile.id
         profile.save()
 
+    q = Check.objects.filter(user=request.user).order_by('created')
+    checks = list(q)
+
     show_api_key = False
     if request.method == "POST":
         if "set_password" in request.POST:
@@ -215,6 +218,7 @@ def profile(request):
 
     ctx = {
         "page": "profile",
+        "checks": checks,
         "badge_urls": badge_urls,
         "profile": profile,
         "show_api_key": show_api_key

@@ -273,6 +273,16 @@
                             placeholder="friend@example.org">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="itm-check" class="col-sm-2 control-label">Check(s)</label>
+                    <div class="col-sm-9">
+                        <select class="form-control" id="sel2">
+                            {% for check in checks %}
+                                <option>{{check.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
