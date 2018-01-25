@@ -20,7 +20,7 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'hc-the-knight.herokuapp.com']
+                 'hc-faqs.herokuapp.com']
 DEFAULT_FROM_EMAIL = 'healthchecks@gmail.com'
 USE_PAYMENTS = False
 
@@ -130,7 +130,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "http://localhost:5000"
+SITE_ROOT = "hc-faqs.herokuapp.com"
 
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
