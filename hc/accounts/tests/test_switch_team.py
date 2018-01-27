@@ -5,7 +5,7 @@ from hc.api.models import Check
 class SwitchTeamTestCase(BaseTestCase):
 
     def test_it_switches(self):
-        c = Check(user=self.alice, name="This belongs to Alice")
+        c = Check(user=self.alice, name="This belongs to Alice", member_allowed_access=True, member_allowed_id=52)
         c.save()
 
         self.client.login(username="bob@example.org", password="password")

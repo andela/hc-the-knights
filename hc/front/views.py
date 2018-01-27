@@ -39,8 +39,8 @@ def my_checks(request):
         q = Check.objects.filter(user=request.team.user).order_by("created")
         checks = list(q)
     else:
-        q = Check.objects.filter(user=request.team.user, member_allowed_access=True, \
-                                member_allowed_id=current_user_id).order_by("created")
+        q = Check.objects.filter(user=request.team.user, member_allowed_access=True,
+                                 member_allowed_id=current_user_id).order_by("created")
         checks = list(q)
 
     g_checks = []
