@@ -8,7 +8,7 @@ class MyChecksTestCase(BaseTestCase):
 
     def setUp(self):
         super(MyChecksTestCase, self).setUp()
-        self.check = Check(user=self.alice, name="Alice Was Here")
+        self.check = Check(user=self.alice, name="Alice Was Here", member_allowed_access=True, member_allowed_id=302)
         self.check.save()
 
     def test_it_works(self):

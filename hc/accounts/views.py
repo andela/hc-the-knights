@@ -177,10 +177,9 @@ def profile(request):
                 check_name = form.cleaned_data["check"]
                 try:
                     user = User.objects.get(email=email)
-                    check_obj = Check.objects.get(name=check_name)
                 except User.DoesNotExist:
                     user = _make_user(email)
-
+                check_obj = Check.objects.get(name=check_name)
                 profile.invite(user, check_obj)
                 messages.success(request, "Invitation to %s sent!" % email)
         elif "remove_team_member" in request.POST:
@@ -271,7 +270,6 @@ def unsubscribe_reports(request, username):
 
 def switch_team(request, target_username):
     other_user = User.objects.get(username=target_username)
-
     # The rules:
     # Superuser can switch to any team.
     access_ok = request.user.is_superuser
