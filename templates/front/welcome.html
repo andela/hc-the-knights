@@ -6,10 +6,37 @@
 <div class="container">
     <div class="row">
     <div class="col-sm-12">
-        <h1 id="pitch">Cron Monitoring. Get Notified When Your Cron Jobs Fail.</h1>
+        <br>
+        <div class="row">
+            <div class="col-sm-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="active">
+                        <a href="#about-hc" data-toggle="tab">What is Healthchecks</a>
+                    </li>
+                    <li>
+                        <a href="#ping" data-toggle="tab">What is a Ping</a>
+                    </li>
+                    <li>
+                        <a href="#cron" data-toggle="tab">What is a cron</a>
+                    </li>
+                    
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="about-hc">
+                        {% include "front/snippets/about_hc.html" %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="ping">
+                     {% include "front/snippets/about_ping.html" %}
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="cron">
+                         {% include "front/snippets/about_cron.html" %}
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     </div>
-
+<br><br>
     <div class="row">
     <div class="col-sm-6 col-sm-push-6">
         <p id="pitch-text">Make a HTTP GET request to this address from your cron job, daemon, script or long running task.
