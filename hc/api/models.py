@@ -13,6 +13,7 @@ from django.core.urlresolvers import reverse
 from django.utils import timezone
 from hc.api import transports
 from hc.lib import emails
+from hc.accounts.models import Profile
 
 STATUSES = (
     ("up", "Up"),
@@ -57,6 +58,8 @@ class Check(models.Model):
     often = models.BooleanField(default=False)
     nag_after = models.DateTimeField(null=True, blank=True, editable=True)
     nag_status = models.BooleanField(default=False)
+    member_allowed_access = models.BooleanField(default=False)
+    member_allowed_id = models.IntegerField(default=0)
 
 
 

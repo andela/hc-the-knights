@@ -2,13 +2,15 @@ from hc.api.models import Check
 from hc.test import BaseTestCase
 from datetime import timedelta as td
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 
 class MyChecksTestCase(BaseTestCase):
 
     def setUp(self):
         super(MyChecksTestCase, self).setUp()
-        self.check = Check(user=self.alice, name="Alice Was Here")
+        b = User.objects.get(email="bob@example.org")
+        self.check = Check(user=self.alice, name="Alice Was Here", member_allowed_access=True, member_allowed_id=b.id)
         self.check.save()
 
     def test_it_works(self):
