@@ -9,9 +9,7 @@
     <div class="col-sm-12">
         <h1>
         {% if request.team == request.user.profile %}
-            My Checks
-        {% else %}
-            {{ request.team.team_name }}
+           {{ departments }} Checks
         {% endif %}
         </h1>
     </div>
@@ -28,19 +26,12 @@
         {% endfor %}
     </div>
     {% endif %}
-    {% if departments %}
     <div class="col-sm-12">
-        <label>Departments</label>
-        {% for department in departments %}
-                {% if department == '' %}
-                {% else %}
-            <form style ="display: inline;" action="{% url 'hc-departments' dept=department|escape %}">
-                <input style="border-radius:10px;"type="submit" value="{{ department }}"/>
-            </form>
-                 {% endif %}
-        {% endfor %} 
+            <a style ="display: inline;" href="{% url 'hc-checks' %}">
+                    <input style="border-radius:10px;"type="submit" value="Back To All Checks"/>
+            </a>  
     </div>
-    {% endif %}
+    
 </div>
 <div class="row">
     <div class="col-sm-12">
@@ -54,15 +45,6 @@
     {% endif %}
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-12">
-        <form method="post" action="{% url 'hc-add-check' %}" class="text-center">
-            {% csrf_token %}
-            <input type="submit" class="btn btn-primary btn-lg" value="Add Check">
-        </form>
-    </div>
-</div>
-
 <div id="update-name-modal" class="modal">
     <div class="modal-dialog">
         <form id="update-name-form" class="form-horizontal" method="post">
@@ -96,18 +78,7 @@
                             <label for="update-department-input" class="col-sm-2 control-label">
                                 Department
                             </label>
-                            <div class="col-sm-9">
-                                <input
-                                    id="update-department-input"
-                                    name="department"
-                                    type="text"
-                                    value="---"
-                                    placeholder= "Department"
-                                    class="form-control" />
-                                <span class="help-block">
-                                    Assign a department name for easy filtering
-                                </span>
-                            </div>
+                            
                         </div>
 
                         <div class="form-group">
