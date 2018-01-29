@@ -97,6 +97,7 @@ $(function () {
         $("#update-name-form").attr("action", $this.data("url"));
         $("#update-name-input").val($this.data("name"));
         $("#update-tags-input").val($this.data("tags"));
+        $("#update-department-input").val($this.data("departments"));
         $('#update-name-modal').modal("show");
         $("#update-name-input").focus();
 
@@ -123,8 +124,6 @@ $(function () {
 
         return false;
     });
-
-
     $("#my-checks-tags button").click(function() {
         // .active has not been updated yet by bootstrap code,
         // so cannot use it

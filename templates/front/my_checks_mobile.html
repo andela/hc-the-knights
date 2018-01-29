@@ -49,6 +49,7 @@
                     {% for tag in check.tags_list %}
                     <span class="label label-tag">{{ tag }}</span>
                     {% endfor %}
+                    <span class="label label-tag">{{ check.check_department}}</span>
                 </td>
             </tr>
             {% endif %}
@@ -78,6 +79,7 @@
                 href="#"
                 data-name="{{ check.name }}"
                 data-tags="{{ check.tags }}"
+                data-departments="{{ check.department }}"
                 data-url="{% url 'hc-update-name' check.code %}"
                 class="btn btn-default my-checks-name">
                 Rename
