@@ -1,11 +1,13 @@
 from hc.test import BaseTestCase
 from hc.api.models import Check
+from django.contrib.auth.models import User
 
 
 class SwitchTeamTestCase(BaseTestCase):
 
     def test_it_switches(self):
-        c = Check(user=self.alice, name="This belongs to Alice")
+        b = User.objects.get(email="bob@example.org")
+        c = Check(user=self.alice, name="This belongs to Alice", member_allowed_access=True, member_allowed_id=b.id)
         c.save()
 
         self.client.login(username="bob@example.org", password="password")
