@@ -59,7 +59,8 @@ class Check(models.Model):
     often = models.BooleanField(default=False)
     nag_after = models.DateTimeField(null=True, blank=True, editable=True)
     nag_status = models.BooleanField(default=False)
-    member_allowed_access = models.IntegerField(default=0)
+    member_allowed_access = models.BooleanField(default=False)
+    member_allowed_id = models.IntegerField(default=0)
 
 
 

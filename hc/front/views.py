@@ -2,6 +2,7 @@ from collections import Counter
 from datetime import timedelta as td
 from itertools import tee
 
+from django.contrib.auth.models import User
 import requests
 from django.conf import settings
 from django.contrib import messages
@@ -30,8 +31,18 @@ def pairwise(iterable):
 
 @login_required
 def my_checks(request):
-    q = Check.objects.filter(user=request.team.user).order_by("created")
-    checks = list(q)
+
+    checks = []
+    current_user_id = request.user.id
+   
+    if request.team == request.user.profile:
+        q = Check.objects.filter(user=request.team.user).order_by("created")
+        checks = list(q)
+    else:
+        q = Check.objects.filter(user=request.team.user, member_allowed_access=True, \
+                                member_allowed_id=current_user_id).order_by("created")
+        checks = list(q)
+
     g_checks = []
     counter = Counter()
     departments, grace_tags = set(), set()
@@ -47,8 +58,12 @@ def my_checks(request):
                     grace_tags.add(tag)
 
             g_checks.append(check)
+<<<<<<< HEAD
             if department != "":
                 departments.add(department)
+=======
+
+>>>>>>> [CHORE #153728038] added check filter for allowed members
     ctx = {
         "page": "checks",
         "checks": g_checks,

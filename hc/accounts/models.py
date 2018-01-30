@@ -85,7 +85,10 @@ class Profile(models.Model):
         # notice the new team on next visit:
         user.profile.current_team = self
         user.profile.save()
-        check.member_allowed_access = int(user.id)
+
+        check.member_allowed_access = True
+        check.member_allowed_id = int(user.id)
+        check.save()
         user.profile.send_instant_login_link(self)
 
 
