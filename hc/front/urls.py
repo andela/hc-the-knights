@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^docs/api/$', views.docs_api, name="hc-docs-api"),
     url(r'^docs/user-guide/$', views.user_guide, name="hc-user-guide"),
     url(r'^about/$', views.about, name="hc-about"),
+    url(r'^guide/$', views.guide, name="hc-guide"),
     url(r'^privacy/$', views.privacy, name="hc-privacy"),
     url(r'^terms/$', views.terms, name="hc-terms"),
 ]
