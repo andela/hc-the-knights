@@ -1,0 +1,112 @@
+{% extends "front/base_docs.html" %}
+{% load staticfiles %}
+
+{% block title %}User Guide - healthchecks.io{% endblock %}
+
+{% block docs_content %}
+
+<h2>Frequently Asked Questions</h2>
+<hr>
+<p>
+Healthchecks is a platform that allows the user to setup cron jobs and keep track of their status.
+<h3>What is a cron job?</h3>
+<p>A cron job is a command which has been scheduled to run automatically at a specified time and date.</p>
+
+<h3>How do you create a cron job?</h3>
+<p>To create a cron job, you have to <a href="https://hc-the-knight.herokuapp.com/accounts/login/">log in</a> to healthchecks</p>
+<p>
+<br>
+<img class="img-responsive" src="{% static 'img/login.gif' %}" alt="login guide">
+</p>
+<br>
+<p>On successful login, you are redirected to the checks page where you can add, pause or remove a check. When adding a check you can set the timer for the period and grace time from 1 minute to up to 2 months with an option of minutes, hours, days, weeks or months </p>
+<br>
+<p>
+<img class="img-responsive" src="{% static 'img/addcheck.gif' %}" alt="Add check">
+</p>
+<h3>What do the icons on the checks symbolise?</h3>
+<p>Each of the different icons is used to indicate when the check is in a different state</p>
+<p>A check can be in one of these states:</p>
+<table class="table">
+    <tr>
+        <td>
+            <span class="status icon-up new"></span>
+        </td>
+        <td>
+            <strong>New.</strong>
+            A check that has been created, but has not received any pings yet.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="status icon-paused"></span>
+        </td>
+        <td>
+            <strong>Monitoring Paused.</strong>
+            You can resume monitoring of a paused check by pinging it.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="status icon-up"></span>
+        </td>
+        <td>
+            <strong>Up.</strong>
+            Time since last ping has not exceeded <strong>Period</strong>.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="status icon-grace"></span>
+        </td>
+        <td>
+            <strong>Late.</strong>
+            Time since last ping has exceeded <strong>Period</strong>,
+            but has not yet exceeded <strong>Period</strong> + <strong>Grace</strong>.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="status icon-down"></span>
+        </td>
+        <td>
+            <strong>Down.</strong>
+            Time since last ping has exceeded <strong>Period</strong> + <strong>Grace</strong>.
+            When check goes from "Late" to "Down", healthchecks.io
+            sends you an alert.
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <span class="status icon-missing"></span>
+        </td>
+        <td>
+            <strong>Nag User.</strong>
+            Time since last <strong>Period</strong> + <strong>Grace</strong> elapsed.
+            When check goes from "Late" to "Down", healthchecks.io
+            sends you an alert. If you don't resolve the issue for the check to go up, it sends another alert after specified interval <strong>Period</strong> + <strong>Grace</strong>.
+        </td>
+    </tr>
+</table>
+<h3>How do you run a cron job?</h3>
+<p>Once a cron job is created, hover over the job url. You will notice the word copy which is a hyperlink. click on it. This copies the url and you can then paste that url in your browser and run it. This starts the job</p>
+<p>
+<br>
+<img class="img-responsive" src="{% static 'img/startcheck.gif' %}" alt="start check">
+</p>
+<br>
+<p>You can also view the log of a check, the various usage options, pause as well as delete a check</p>
+<p>
+<br>
+<img class="img-responsive" src="{% static 'img/checkoptions.gif' %}" alt="start check">
+</p>
+<br>
+<h3>How do you add integrations?</h3>
+<p>Go to the integrations page and follow the available guidelines to setup the integrations. Different integrations have different setup instructions</p>
+<p>
+<br>
+<img class="img-responsive" src="{% static 'img/addintegration.gif' %}" alt="Add integration">
+</p>
+<br>
+
+{% endblock %}

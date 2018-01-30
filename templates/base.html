@@ -95,11 +95,16 @@
                 {% endif %}
 
                 <li {% if page == 'docs' %} class="active" {% endif %}>
-                    <a href="{% url 'hc-docs' %}">Docs</a>
+                    <a href="{% url 'hc-user-guide' %}">Docs</a>
                 </li>
 
                 <li {% if page == 'about' %} class="active" {% endif %}>
                     <a href="{% url 'hc-about' %}">About</a>
+                </li>
+
+
+                <li {% if page == 'guide' %} class="active" {% endif %}>
+                    <a href="{% url 'hc-guide' %}">User guide</a>
                 </li>
             </ul>
 
@@ -173,5 +178,10 @@
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     {% endcompress %}
     {% endblock %}
+    <script>
+        (function (w,i,d,g,e,t,s) {w[d] = w[d]||[];t= i.createElement(g);
+          t.async=1;t.src=e;s=i.getElementsByTagName(g)[0];s.parentNode.insertBefore(t, s);
+        })(window, document, '_gscq','script','//widgets.getsitecontrol.com/121934/script.js');
+      </script>
 </body>
 </html>
