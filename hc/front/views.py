@@ -33,9 +33,8 @@ def pairwise(iterable):
 def my_checks(request):
 
     checks = []
-   current_user_id = request.user.id
+    current_user_id = request.user.id
 
-    if request.team == request.user.profile:
     if request.team == request.user.profile:
         q = Check.objects.filter(user=request.team.user).order_by("created")
         checks = list(q)
