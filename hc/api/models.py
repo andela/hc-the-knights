@@ -46,6 +46,7 @@ class Check(models.Model):
 
     name = models.CharField(max_length=100, blank=True)
     tags = models.CharField(max_length=500, blank=True)
+    department = models.CharField(null=False, max_length=500, blank=True)
     code = models.UUIDField(default=uuid.uuid4, editable=False, db_index=True)
     user = models.ForeignKey(User, blank=True, null=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -68,7 +69,10 @@ class Check(models.Model):
             return self.name
 
         return str(self.code)
-
+    
+    def check_department(self):
+        return self.department
+    
     def url(self):
         return settings.PING_ENDPOINT + str(self.code)
 
