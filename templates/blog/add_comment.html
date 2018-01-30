@@ -1,0 +1,6 @@
+<h4>Add Category</h4>
+        <form method="post" >
+            {% csrf_token %}
+            {{ form_comment.as_p }}
+            <button type = "submit" name = "add_comment">submit</button>
+        </form>

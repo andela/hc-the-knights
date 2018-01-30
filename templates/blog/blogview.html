@@ -16,15 +16,23 @@
             </h2>
             {% include 'blog/category.html' %}
                         {% for category in categories %}
-                        <a data-toggle="collapse" href="#{{ post.id }}">
-                            
-                        </a>
+                        
                             <ul>
-                                
+                                    <a data-toggle="collapse" href="#{{ post.id }}">
                                     {{ category.title }}
+                                </a>
                             </ul>
-                            
-                        </a>
+                            <div id="{{ .id }}" class="collapse">
+                                    {% for blog in cats %}
+                                    <ul>
+                                            {{ blog.title }}
+                                    </ul>
+                                    
+                                    {% endfor %}
+                            </div> 
+                        
+
+            
                         {% endfor %}
                     
     
@@ -50,6 +58,9 @@
                             {{ post.author }} {{ post.created_on }} 
                             <small>Category:{{ post.category }}</small>
                         </small>
+                        <a href="{% url 'blog:hc-add-comment' post.slug %}">
+                            Add comment
+                        </a>
                         </div>
                         </div>
                         {% endfor %}
