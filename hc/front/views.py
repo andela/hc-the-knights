@@ -34,7 +34,7 @@ def my_checks(request):
 
     checks = []
     current_user_id = request.user.id
-   
+
     if request.team == request.user.profile:
         q = Check.objects.filter(user=request.team.user).order_by("created")
         checks = list(q)
@@ -58,12 +58,9 @@ def my_checks(request):
                     grace_tags.add(tag)
 
             g_checks.append(check)
-<<<<<<< HEAD
             if department != "":
                 departments.add(department)
-=======
 
->>>>>>> [CHORE #153728038] added check filter for allowed members
     ctx = {
         "page": "checks",
         "checks": g_checks,
@@ -78,7 +75,8 @@ def my_checks(request):
 
 
 def unresolved_checks(request):
-    unresolved_checks = Check.objects.filter(user=request.team.user).order_by("created")
+    unresolved_checks = Check.objects.filter(
+        user=request.team.user).order_by("created")
     checks = list(unresolved_checks)
     counter = Counter()
     failed = []
@@ -109,11 +107,13 @@ def unresolved_checks(request):
     }
     return render(request, "front/unresolved_checks.html", ctx)
 
+
 def department_checks(request, dept):
-    q = Check.objects.filter(user=request.team.user, department=dept).order_by("created")
+    q = Check.objects.filter(user=request.team.user,
+                             department=dept).order_by("created")
     checks = list(q)
     counter = Counter()
-    departments,down_tags, grace_tags = set(), set(), set()
+    departments, down_tags, grace_tags = set(), set(), set()
     for check in checks:
         status = check.get_status()
         department = check.check_department()
@@ -141,7 +141,6 @@ def department_checks(request, dept):
     }
 
     return render(request, "front/department_checks.html", ctx)
-
 
 
 def _welcome_check(request):
