@@ -5,7 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 from django.core.management.base import BaseCommand
 from django.db import connection
 from django.utils import timezone
-from hc.api.models import Check
+from hc.api.models import Check, Channel
+from hc.accounts.models import Member
 
 executor = ThreadPoolExecutor(max_workers=10)
 logger = logging.getLogger(__name__)
@@ -49,6 +50,7 @@ class Command(BaseCommand):
         # check if status is down and set the new nag time iterval
         if check.status == "down":
             check.nag_status = True
+            self.handles_priority(check)
             check.nag_after = (timezone.now() + check.timeout + check.grace)
             check.save()
 
@@ -75,3 +77,14 @@ class Command(BaseCommand):
             if ticks % 60 == 0:
                 formatted = timezone.now().isoformat()
                 self.stdout.write("-- MARK %s --" % formatted)
+
+    def handles_priority(self, check):
+        members = Member.objects.filter(team=check.user.profile).all()
+        for member in members:
+            if member.priority == "LOW" or (member.priority == "HIGH" and not check.is_alerted):
+                channel = Channel.objects.filter(value=member.user.email).first()
+                check.is_alerted = True
+                check.save()
+                error = channel.notify(check)
+                if error not in ("", "no-op"):
+                    print("%s, %s" % (channel, error))
