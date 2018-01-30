@@ -11,11 +11,10 @@ def blog_category(request):
     form = BlogCategoryForm(request.POST or None, prefix="create_category")
     form_blog = BlogForm(request.POST or None, prefix="create_blog")
     categories = BlogCategory.objects.all()
-    blogs = Blog.objects.all()
+    # blogs = Blog.objects.all()
     cxt = {
         'form':form,
         'categories':categories,
-        'blogs':blogs,
         'form_blog':form_blog
     }
     if request.method == 'POST':
@@ -53,34 +52,40 @@ def blog_category(request):
     else:
         return render(request, "blog/blogview.html", cxt)
 
+def blog_by_category(request, category):
+    category = BlogCategory.objects.get(id=category)
+    blogs = Blog.objects.filter(category=category)
+    blogs = list(blogs)
+    categories = BlogCategory.objects.all()
+    if blogs:
+        cxt = {
+            "blogs": blogs,
+            'categories':categories,
+            "category": category.title
+        }
+        return render(request, "blog/blogview.html", cxt)
+    return redirect("blog:hc-category")
+
 def add_comment(request, post):
     
     form_comment = CommentForm(request.POST or None)
-    # form_category = BlogCategoryForm(request.POST or None, prefix='category')
-    # categories = BlogCategory.objects.all()
-    # blogs = Blog.objects.all()
-    # blog_post = Blog.objects.get(slug=post)
+ 
     cxt = {
-        'form_category':form_category,
-        # 'form_comment':form_comment,
-        # 'categories':categories,
-        # 'blogs':blogs
-    }
+        'form_comment':form_comment,
+       }
+    blog = Blog.objects.get(id=post)  
     if request.method == "POST":
         if "add_comment" in request.POST: 
             
             if form_comment.is_valid():
-            
                 comment = form_comment.save(commit=False)
                 comment.body = form_comment.cleaned_data['body']
                 comment.name = request.user
-                comment.post_id=blog_post.id
-                # blog.draft = form.cleaned_data['draft']
-                comment.save()
-                
+                comment.post = blog
+                form_comment.save()
                 messages.success(request, "Comment successfully added")
-                return redirect('blog:hc-category')
-            return HttpResponseRedirect('/blog/create/', cxt)
+                return redirect('blog:hc-view-blog', blog.slug)
+            return render(request, "blog/view_post.html", cxt)
         # return HttpResponseRedirect('/blog/', cxt)
     return render(request, "blog/view_post.html", cxt)
     
@@ -88,15 +93,15 @@ def add_comment(request, post):
 
 def view_blog_detail(request, slug):
     form_comment = CommentForm(request.POST or None)
-    post = get_object_or_404(Blog, slug=slug)
-    blog = Blog.objects.get(slug=slug)
-    comments = Comment.objects.filter(post=blog.id)
+    # post = get_object_or_404(Blog, slug=slug)
+    blog = Blog.objects.filter(slug=slug)
+    comments = Comment.objects.filter(post=blog)
     ctx = {
         'comments':comments,
-        'post':post,
-        'form_comment':form_comment
+        'form_comment':form_comment,
+        'blog':blog
     }
-    return render(request, "blog/view_post.html", ctx)
+    return render(request, "blog/view_post.html", ctx, slug)
 
 def edit_blog(request, slug):
     post = get_object_or_404(Blog, slug=slug)
