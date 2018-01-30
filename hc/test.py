@@ -22,7 +22,7 @@ class BaseTestCase(TestCase):
         self.bob = User(username="bob", email="bob@example.org")
         self.bob.set_password("password")
         self.bob.save()
-
+        
         self.bobs_profile = Profile(user=self.bob)
         self.bobs_profile.current_team = self.profile
         self.bobs_profile.save()

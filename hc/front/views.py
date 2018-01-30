@@ -2,6 +2,7 @@ from collections import Counter
 from datetime import timedelta as td
 from itertools import tee
 
+from django.contrib.auth.models import User
 import requests
 from django.conf import settings
 from django.contrib import messages
@@ -30,8 +31,18 @@ def pairwise(iterable):
 
 @login_required
 def my_checks(request):
-    q = Check.objects.filter(user=request.team.user).order_by("created")
-    checks = list(q)
+
+    checks = []
+    current_user_id = request.user.id
+
+    if request.team == request.user.profile:
+        q = Check.objects.filter(user=request.team.user).order_by("created")
+        checks = list(q)
+    else:
+        q = Check.objects.filter(user=request.team.user, member_allowed_access=True,
+                                 member_allowed_id=current_user_id).order_by("created")
+        checks = list(q)
+
     g_checks = []
     counter = Counter()
     departments, grace_tags = set(), set()
@@ -45,10 +56,11 @@ def my_checks(request):
                 counter[tag] += 1
                 if check.in_grace_period():
                     grace_tags.add(tag)
-        
+
             g_checks.append(check)
             if department != "":
                 departments.add(department)
+
     ctx = {
         "page": "checks",
         "checks": g_checks,
@@ -61,8 +73,10 @@ def my_checks(request):
 
     return render(request, "front/my_checks.html", ctx)
 
+
 def unresolved_checks(request):
-    unresolved_checks = Check.objects.filter(user=request.team.user).order_by("created")
+    unresolved_checks = Check.objects.filter(
+        user=request.team.user).order_by("created")
     checks = list(unresolved_checks)
     counter = Counter()
     failed = []
@@ -93,11 +107,13 @@ def unresolved_checks(request):
     }
     return render(request, "front/unresolved_checks.html", ctx)
 
+
 def department_checks(request, dept):
-    q = Check.objects.filter(user=request.team.user, department=dept).order_by("created")
+    q = Check.objects.filter(user=request.team.user,
+                             department=dept).order_by("created")
     checks = list(q)
     counter = Counter()
-    departments,down_tags, grace_tags = set(), set(), set()
+    departments, down_tags, grace_tags = set(), set(), set()
     for check in checks:
         status = check.get_status()
         department = check.check_department()
@@ -125,6 +141,7 @@ def department_checks(request, dept):
     }
 
     return render(request, "front/department_checks.html", ctx)
+
 
 def _welcome_check(request):
     check = None
@@ -183,8 +200,25 @@ def docs_api(request):
     return render(request, "front/docs_api.html", ctx)
 
 
+def user_guide(request):
+    ctx = {
+        "page": "docs",
+        "section": "guide",
+        "SITE_ROOT": settings.SITE_ROOT,
+        "PING_ENDPOINT": settings.PING_ENDPOINT,
+        "default_timeout": int(DEFAULT_TIMEOUT.total_seconds()),
+        "default_grace": int(DEFAULT_GRACE.total_seconds())
+    }
+
+    return render(request, "front/user_guide.html", ctx)
+
+
 def about(request):
     return render(request, "front/about.html", {"page": "about"})
+
+
+def guide(request):
+    return render(request, "front/guide.html", {"page": "guide"})
 
 
 @login_required

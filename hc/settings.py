@@ -98,7 +98,7 @@ if os.getenv('DATABASE_URL') == "TRUE":
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
-if os.getenv("DB") == "postgres":
+if os.environ.get("DB") == "postgres":
     DATABASES = {
         'default': {
             'ENGINE':   'django.db.backends.postgresql',
@@ -108,22 +108,22 @@ if os.getenv("DB") == "postgres":
         }
     }
 
-# if os.getenv("DB") == "mysql":
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.mysql',
-#             'USER':     'root',
-#             'NAME':     'hc',
-#             'TEST': {'CHARSET': 'UTF8'}
-#         }
-#     }
+if os.environ.get("DB") == "mysql":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'USER':     'root',
+            'NAME':     'hc',
+            'TEST': {'CHARSET': 'UTF8'}
+        }
+    }
 
+if os.environ.get('DATABASE_URL') == "TRUE":
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-# if os.getenv('DATABASE_URL') == "TRUE":
-#     db_from_env = dj_database_url.config()
-#     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-#     DATABASES['default'].update(db_from_env)
-
+if os.environ.get('DATABASE_URL') == "TRUE":
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -153,15 +153,15 @@ COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
 DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_POST = 587
+EMAIL_HOST_USER = "hctheknights@gmail.com"
+EMAIL_HOST_PASSWORD = "hctk12345"
+EMAIL_USE_TLS = True
 
 # Slack integration -- override these in local_settings
-SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
-SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
+SLACK_CLIENT_ID = None
+SLACK_CLIENT_SECRET = None
 
 # Pushover integration -- override these in local_settings
 PUSHOVER_API_TOKEN = None
