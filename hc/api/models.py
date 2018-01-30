@@ -60,8 +60,7 @@ class Check(models.Model):
     nag_status = models.BooleanField(default=False)
     member_allowed_access = models.BooleanField(default=False)
     member_allowed_id = models.IntegerField(default=0)
-
-
+    is_alerted = models.BooleanField(default=False)
 
     def name_then_code(self):
         if self.name:
