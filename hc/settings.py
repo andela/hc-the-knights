@@ -100,24 +100,24 @@ if os.getenv('DATABASE_URL') == "TRUE":
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
 if os.environ.get("DB") == "postgres":
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hc',
-        'USER': 'postgres',
-        'TEST': {'CHARSET': 'UTF8'}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'hc',
+            'USER': 'postgres',
+            'TEST': {'CHARSET': 'UTF8'}
+        }
     }
-}
 
 if os.environ.get("DB") == "mysql":
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'NAME': 'hc',
-        'TEST': {'CHARSET': 'UTF8'}
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'USER': 'root',
+            'NAME': 'hc',
+            'TEST': {'CHARSET': 'UTF8'}
+        }
     }
-}
 
 if os.environ.get('DATABASE_URL') == "TRUE":
     STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
