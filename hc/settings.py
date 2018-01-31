@@ -20,8 +20,9 @@ HOST = "localhost"
 SECRET_KEY = "---"
 DEBUG = True
 ALLOWED_HOSTS = ['0.0.0.0', 'localhost',
-                 'hc-the-knight.herokuapp.com', ]
-DEFAULT_FROM_EMAIL = 'healthchecks@example.org'
+                 'hc-the-knight.herokuapp.com',
+                 'hc-faqs.herokuapp.com']
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
 USE_PAYMENTS = False
 
 
@@ -135,7 +136,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "hc-the-knight.herokuapp.com"
+SITE_ROOT = 'hc-faqs.herokuapp.com'  # "hc-the-knight.herokuapp.com"
 
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
@@ -153,15 +154,15 @@ COMPRESS_OFFLINE = True
 
 EMAIL_BACKEND = "djmail.backends.default.EmailBackend"
 DJMAIL_REAL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_POST = 587
-EMAIL_HOST_USER = "hctheknights@gmail.com"
-EMAIL_HOST_PASSWORD = "hctk12345"
-EMAIL_USE_TLS = True
+EMAIL_HOST = os.getenv("EMAIL_HOST")
+EMAIL_PORT = os.getenv("EMAIL_PORT")
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
 
 # Slack integration -- override these in local_settings
-SLACK_CLIENT_ID = None
-SLACK_CLIENT_SECRET = None
+SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
 
 # Pushover integration -- override these in local_settings
 PUSHOVER_API_TOKEN = None
@@ -173,7 +174,6 @@ PUSHOVER_EMERGENCY_EXPIRATION = 86400
 PUSHBULLET_CLIENT_ID = None
 PUSHBULLET_CLIENT_SECRET = None
 
-# Twilio
 TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
 TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 TWILIO_NUMBER = os.getenv('TWILIO_NUMBER')
