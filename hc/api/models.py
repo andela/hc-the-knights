@@ -68,10 +68,10 @@ class Check(models.Model):
             return self.name
 
         return str(self.code)
-    
+
     def check_department(self):
         return self.department
-    
+
     def url(self):
         return settings.PING_ENDPOINT + str(self.code)
 
