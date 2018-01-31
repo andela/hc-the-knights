@@ -72,6 +72,7 @@ class Profile(models.Model):
         ctx = {
             "checks": self.user.check_set.order_by("created"),
             "now": now,
+            "reports_allowed": self.reports_allowed,
             "unsub_link": unsub_link
         }
 

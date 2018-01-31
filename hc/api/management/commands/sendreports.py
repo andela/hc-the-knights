@@ -16,7 +16,7 @@ def num_pinged_checks(profile):
 
 class Command(BaseCommand):
     help = 'Send due monthly reports'
-    tmpl = "Sending monthly report to %s"
+    tmpl = "Sending %s report to %s"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -29,18 +29,20 @@ class Command(BaseCommand):
 
     def handle_one_run(self):
         now = timezone.now()
-        month_before = now - timedelta(days=30)
 
         report_due = Q(next_report_date__lt=now)
         report_not_scheduled = Q(next_report_date__isnull=True)
 
         q = Profile.objects.filter(report_due | report_not_scheduled)
-        q = q.filter(reports_allowed=True)
-        q = q.filter(user__date_joined__lt=month_before)
+        daily_report = Q(reports_allowed="daily")
+        weekly_report = Q(reports_allowed="weekly")
+        monthly_report = Q(reports_allowed="monthly")
+        q = q.filter(daily_report | weekly_report | monthly_report)
+
         sent = 0
         for profile in q:
             if num_pinged_checks(profile) > 0:
-                self.stdout.write(self.tmpl % profile.user.email)
+                self.stdout.write(self.tmpl % (profile.reports_allowed, profile.user.email))
                 profile.send_report()
                 sent += 1
 
