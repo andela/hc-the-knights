@@ -93,9 +93,9 @@ DATABASES = {
 }
 
 if os.getenv('DATABASE_URL') == "TRUE":
-db_from_env = dj_database_url.config()
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
-DATABASES['default'].update(db_from_env)
+    db_from_env = dj_database_url.config()
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    DATABASES['default'].update(db_from_env)
 
 # You can switch database engine to postgres or mysql using environment
 # variable 'DB'. Travis CI does this.
@@ -120,11 +120,11 @@ DATABASES = {
 }
 
 if os.environ.get('DATABASE_URL') == "TRUE":
-STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+    STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 if os.environ.get('DATABASE_URL') == "TRUE":
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+    db_from_env = dj_database_url.config()
+    DATABASES['default'].update(db_from_env)
 
 LANGUAGE_CODE = 'en-us'
 
@@ -179,6 +179,6 @@ TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
 TWILIO_NUMBER = os.getenv('TWILIO_NUMBER')
 
 if os.path.exists(os.path.join(BASE_DIR, "hc/local_settings.py")):
-from .local_settings import *
+    from .local_settings import *
 else:
-warnings.warn("local_settings.py not found, using defaults")
+    warnings.warn("local_settings.py not found, using defaults")
