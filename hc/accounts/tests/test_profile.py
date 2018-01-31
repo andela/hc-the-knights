@@ -31,7 +31,7 @@ class ProfileTestCase(BaseTestCase):
 
         # Assert that the email was sent and check email content
         self.assertEqual(len(mail.outbox), 1)
-        self.assertIn('Monthly Report', mail.outbox[0].subject)
+        self.assertIn('Report', mail.outbox[0].subject)
 
     def test_it_adds_team_member(self):
         self.client.login(username="alice@example.org", password="password")
