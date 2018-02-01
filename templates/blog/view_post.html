@@ -11,30 +11,32 @@
                 
                     <div class="panel-heading" style="text-align:justify">
                         <h3 class="panel-title" style="font-size:50px">{{ blog.title }}</h3>
-                        <h3 class="panel-title">By: {{ blog.author}}</h3>
+                        <h3 class="panel-title">By: Health Checks</h3>
                         <small>created on:{{ blog.created_on}}</small>
                     </div>
                     <!-- <a target="_blank"  href="https://twitter.com/intent/tweet?text={{blog.title}}&url={{tweet_url}}&hashtags=HealthChecks"></a> -->
                     <div class="panel-body" style="font-size:20px">
                         {{ blog.content }}
                     </div>
-                    <!-- <share your blog> -->
-                    <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{blog.title}}&url={{tweet_url}}&hashtags=HealthChecks">
-                          Tweet
-                    </a>
-                    <a target="_blank" href="http://www.linkedin.com/shareArticle?url=http://localhost:8000{{ request.get_full_path|urlencode }}&title={{ blog.title }}&summary={{ blog.content }}&source=http://localhost:8000" class="fa fa-linkedin">
-                        LinkedIn
-                    </a>
-                        <!-- <end sharing> -->
                     <div class="panel-footer" style="font-size:20px">
                         <a id="button1" href="{% url 'blog:hc-edit-blog' blog.slug %}">
                             <button  type="button" class="btn btn-primary">
                                 edit blog
                             </button>
                         </a>
-                        <a id="button2" href="{% url 'blog:hc-delete-blog' blog.slug %}">
+                        <a id="button1" href="{% url 'blog:hc-delete-blog' blog.slug %}">
                             <button  type="button" class="btn btn-primary" >
                                 delete blog
+                            </button>
+                        </a>
+                        <a id="button2" class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{blog.title}}&url={{tweet_url}}&hashtags=HealthChecks">
+                            <button  type="button" class="btn btn-primary" >
+                                Twitter
+                            </button>
+                        </a>
+                        <a id="button3" target="_blank" href="http://www.linkedin.com/shareArticle?url=http://localhost:8000{{ request.get_full_path|urlencode }}&title={{ blog.title }}&summary={{ blog.content }}&source=http://localhost:8000" class="fa fa-linkedin">
+                            <button  type="button" class="btn btn-primary" >
+                                LinkedIn
                             </button>
                         </a>
                     </div>
