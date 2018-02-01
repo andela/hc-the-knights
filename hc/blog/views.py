@@ -18,11 +18,12 @@ def blog_category(request):
     form = BlogCategoryForm(request.POST or None, prefix="create_category")
     form_blog = BlogForm(request.POST or None, prefix="create_blog")
     categories = BlogCategory.objects.all()
-    # blogs = Blog.objects.all()
+    blogs = Blog.objects.all()
     cxt = {
         'form':form,
         'categories':categories,
-        'form_blog':form_blog
+        'form_blog':form_blog,
+        'blogs':blogs
     }
     if request.method == 'POST':
         if "create_category" in request.POST:
@@ -30,7 +31,6 @@ def blog_category(request):
                 category = form.save(commit=False)
                 category.title = form.cleaned_data['title']
                 category.save()
-                messages.success(request, "Category successfully added")
                 return HttpResponseRedirect('/blog/', cxt)
             return HttpResponseRedirect('/blog/', cxt)
         elif "create_blog" in request.POST:
@@ -42,7 +42,6 @@ def blog_category(request):
             category_query = BlogCategory.objects.get(id=category_input)
             blog=Blog(title=title, content=content, publish=publish, category=category_query)
             blog.save()  
-            messages.success(request, "Blog successfully added")
             return HttpResponseRedirect('/blog/', cxt)
         return HttpResponseRedirect('/blog/', cxt)
     else:
@@ -60,27 +59,17 @@ def blog_by_category(request, category):
     category = BlogCategory.objects.get(id=category)
     blogs = Blog.objects.filter(category=category)
     blogs_list = list(blogs)
-    categories_list = BlogCategory.objects.all()
-    paginator = Paginator(categories_list, 10)
-    page = request.GET.get('page')
-    try:
-        categories = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        categories = paginator.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        categories = paginator.page(paginator.num_pages)
-    paginator_blog = Paginator(blogs_list, 10)
-    page = request.GET.get('page')
-    try:
-        blogs = paginator_blog.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        blogs = paginator_blog.page(1)
-    except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        blogs = paginator_blog.page(paginator.num_pages)
+    categories = BlogCategory.objects.all()
+    # paginator = Paginator(blogs_list, 2)
+    # page = request.GET.get('page')
+    # try:
+    #     blogs = paginator.page(page)
+    # except PageNotAnInteger:
+    #     # If page is not an integer, deliver first page.
+    #     blogs = paginator.page(1)
+    # except EmptyPage:
+    #     # If page is out of range (e.g. 9999), deliver last page of results.
+    #     blogs = paginator.page(paginator.num_pages)
     if blogs:
         cxt = {
             "blogs": blogs,
@@ -88,7 +77,12 @@ def blog_by_category(request, category):
             "category": category.title
         }
         return render(request, "blog/blogview.html", cxt)
-    return redirect("blog:hc-category")
+    message = " No Blog Stories In This Category"
+    cxt = {
+        'categories':categories,
+        "message": message
+    }
+    return render(request, "blog/blogview.html", cxt)
 
 @login_required
 def add_comment(request, post):
