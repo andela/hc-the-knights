@@ -1,6 +1,86 @@
-<h4>Add Category</h4>
-        <form method="post" >
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type = "submit" name = "create_category">submit</button>
-        </form>
+{% extends "front/base_docs.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    Blog Categories
+{% endblock %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css">
+<div id="myblogpost" class="col-md-12">
+    <div class="panel panel-default">
+            <div class="panel-heading">
+                <h2 class="panel-title">Add Blog</h2>
+            </div>
+            <div class="panel-body">
+                <form method="post" action="{% url 'blog:hc-category' %}">
+                        
+                        {% csrf_token %}
+                        <!-- category doesnot exist <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">add it</button> -->
+                        <!-- {{ form_blog.as_p }} -->
+                        
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">category</span>
+            
+                                <select name="selectop" type="text" class="form-control"  aria-describedby="basic-addon1"> 
+                                    {% for categories in form_blog.category%}
+                                    <option name"category"> {{ categories }} </option>
+                                    {% endfor %}
+                                </select>
+                                
+                                <div id="mybutton3">
+                                        <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#myModal">Add category</button>
+                                </div>
+                            </div>
+                        
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">Title</span>
+                                <input type="text" name="title" class="form-control" placeholder="Blog Title" aria-describedby="basic-addon1">
+                            </div>
+
+                            <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">Publish</span>
+                                    <input type="text" name="publish" class="form-control" placeholder="publish" aria-describedby="basic-addon1">
+                                </div>
+                        
+                         
+                            <textarea name="content" placeholder="Blog body"></textarea>
+                        
+                        <div id="mybutton2" >
+                            <button type="submit" name="create_blog" class="btn btn-primary">CREATE BLOG</button></a>
+                        </div>
+                </form>
+            </div>
+    </div>
+    <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+          
+              
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Add Categoryr</h4>
+                </div>
+                <div class="modal-body">
+                        <form method="post" action="{% url 'blog:hc-category' %}">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <button type = "submit" name = "create_category">submit</button>
+                        </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+          
+            </div>
+    </div>
+        <!-- <h2></h2> -->
+    <!-- <h4>Add Category</h4>
+            <form method="post" action="{% url 'blog:hc-category' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type = "submit" name = "create_category">submit</button>
+            </form> -->
+</div>
+{% endblock %}

@@ -7,7 +7,48 @@
 #mybutton{
     margin-top: -26px;
 }
-/* #mybutton button{
-    background-color: rgb(106, 231, 106);
-    color: black
+/* #myblogpost{
+    text-align: center;
 } */
+#myblogpost h2{
+    text-align: center;
+    font-size: 30px;
+
+}
+#myblogpost textarea{
+    /* text-align: center; */
+    margin: 4px;
+    width: 1022px;
+    height: 290px;
+    resize: none;
+    margin-left:2px;
+    border-radius: 5px;
+    border-color: rgb(211, 211, 218)
+}
+#myblogpost select{
+    width: 49%;
+}
+#myblogpost label{
+    font-size: 20px;
+}
+#myblogpost input{
+    width: 50%;
+    height: 30px;
+}
+.addcategory{
+    color:red;
+    margin-left: 70%;
+    
+}
+.input-group{
+    margin: 5px;
+}
+#mybutton2 {
+    margin-left:80%;
+}
+#mybutton3 {
+    margin-left:80%; 
+}
+#button2{
+    margin-left: 74%;
+}
