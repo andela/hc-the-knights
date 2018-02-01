@@ -17,7 +17,6 @@ class ReportSettingsForm(forms.Form):
     reports_allowed = forms.CharField(required=True)
 
 
-
 class SetPasswordForm(forms.Form):
     password = forms.CharField()
 
@@ -25,6 +24,10 @@ class SetPasswordForm(forms.Form):
 class InviteTeamMemberForm(forms.Form):
     email = LowercaseEmailField()
     check = forms.CharField()
+    
+
+class UpdateMemberPriority(forms.Form):
+    email = LowercaseEmailField()
 
 
 class RemoveTeamMemberForm(forms.Form):

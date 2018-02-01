@@ -72,6 +72,7 @@ class Profile(models.Model):
         ctx = {
             "checks": self.user.check_set.order_by("created"),
             "now": now,
+            "reports_allowed": self.reports_allowed,
             "unsub_link": unsub_link
         }
 
@@ -93,5 +94,8 @@ class Profile(models.Model):
 
 
 class Member(models.Model):
+    class Meta:
+        ordering = ['priority']
     team = models.ForeignKey(Profile)
     user = models.ForeignKey(User)
+    priority = models.CharField(max_length=4, default="LOW")
