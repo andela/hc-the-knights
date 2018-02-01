@@ -11,3 +11,6 @@ static/.DS_Store
 .env
 hc-venv/
 .idea/
+.env
+
+
