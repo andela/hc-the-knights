@@ -19,8 +19,7 @@ STATUSES = (
     ("up", "Up"),
     ("down", "Down"),
     ("new", "New"),
-    ("paused", "Paused"),
-    ("often", "Often")
+    ("paused", "Paused")
 )
 DEFAULT_TIMEOUT = td(days=1)
 DEFAULT_GRACE = td(hours=1)
@@ -68,10 +67,10 @@ class Check(models.Model):
             return self.name
 
         return str(self.code)
-    
+
     def check_department(self):
         return self.department
-    
+
     def url(self):
         return settings.PING_ENDPOINT + str(self.code)
 
@@ -81,13 +80,8 @@ class Check(models.Model):
     def email(self):
         return "%s@%s" % (self.code, settings.PING_EMAIL_DOMAIN)
 
-    def send_often_alert(self):
-        self.status = "often"
-        self.send_alert()
-        self.status = "up"
-
     def send_alert(self):
-        if self.status not in ("up", "down", "often"):
+        if self.status not in ("up", "down"):
             raise NotImplementedError("Unexpected status: %s" % self.status)
 
         errors = []
@@ -102,8 +96,6 @@ class Check(models.Model):
             return self.status
 
         now = timezone.now()
-        if self.often and ((now - self.last_ping) < (self.timeout + self.grace)):
-            return "often"
 
         if self.last_ping + self.timeout + self.grace > now:
             return "up"

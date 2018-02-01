@@ -22,10 +22,14 @@
                     data-toggle="tooltip" title="Monitoring paused. Ping to resume."></span>
             {% elif check.in_grace_period %}
                 <span class="status icon-grace"></span>
-            {% elif check.get_status == "often" %}
-                <span class="glyphicon glyphicon-hourglass"></span>
             {% elif check.get_status == "up" %}
                 <span class="status icon-up"></span>
+                {% if check.often %}
+                <span style="color: #d9994f; font-size: 24px;">
+                    <i class="fa fa-clock-o" aria-hidden="true"></i></span>
+                {% else %}
+                <span class="status icon-up"></span>
+                {% endif %}
             {% elif check.nag_status == True %}
                 <span class="status icon-missing"></span>
             {% elif check.get_status == "down" %}
