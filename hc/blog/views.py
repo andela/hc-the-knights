@@ -147,7 +147,6 @@ def edit_blog(request, pk):
     logged_in_user = User.objects.get(pk=current_user.id)
     author=User.objects.get(username=post.author)
     if request.method == 'POST':
-        print('dfdfggdgdfdgdf')
         if 'editblog' in request.POST:
             blog = Blog.objects.filter(pk=pk).first()
             form = BlogForm(request.POST)  
