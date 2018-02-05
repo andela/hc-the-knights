@@ -106,6 +106,9 @@
                     <a href="{% url 'hc-about' %}">About</a>
                 </li>
 
+                <li {% if page == 'guide' %} class="active" {% endif %}>
+                    <a href="{% url 'hc-guide' %}">User guide</a>
+                </li>
             </ul>
 
 

@@ -34,7 +34,6 @@ def my_checks(request):
 
     checks = []
     current_user_id = request.user.id
-
     if request.team == request.user.profile:
         q = Check.objects.filter(user=request.team.user).order_by("created")
         checks = list(q)
@@ -60,6 +59,7 @@ def my_checks(request):
             g_checks.append(check)
             if department != "":
                 departments.add(department)
+
     ctx = {
         "page": "checks",
         "checks": g_checks,
@@ -140,6 +140,7 @@ def department_checks(request, dept):
     }
 
     return render(request, "front/department_checks.html", ctx)
+
 
 def _welcome_check(request):
     check = None
