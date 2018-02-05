@@ -37,10 +37,8 @@ class Command(BaseCommand):
 
     def handle_one(self, check):
         """ Send an alert for a single check.
-
         Return True if an appropriate check was selected and processed.
         Return False if no checks need to be processed.
-
         """
 
         # Save the new status. If sendalerts crashes,

@@ -62,9 +62,11 @@
 #button2{
     margin-left: 52%;
     margin-right: -20%;
+    text-decoration: none;
 }
 #button3{
     margin-left: 20%;
+    text-decoration: none;
 }
 #blogcategories h2{
     font-size: 38px;
