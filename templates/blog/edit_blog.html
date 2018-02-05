@@ -5,7 +5,7 @@
 
 {% block content %}
 {% for blog in blog %}
-<form id="myinput" method="post" action="{% url 'blog:hc-edit-blog' blog.slug %}">
+<form id="myinput" method="post" action="{% url 'blog:hc-edit-blog' blog.id %}">
         {% csrf_token %}
         {{ form_comment.as_p }}
         <button type = "submit" name = "add_comment">Add Comment</button>

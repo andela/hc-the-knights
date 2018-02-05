@@ -13,12 +13,8 @@
                 <h2 class="panel-title">Add Blog</h2>
             </div>
             <div class="panel-body">
-                <form method="post" action="{% url 'blog:hc-category' %}">
-                        
+                <form method="post" action="{% url 'blog:hc-category' %}">  
                         {% csrf_token %}
-                        <!-- category doesnot exist <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">add it</button> -->
-                        <!-- {{ form_blog.as_p }} -->
-                        
                             <div class="input-group">
                                 <span class="input-group-addon" id="basic-addon1">category</span>
             
@@ -38,10 +34,6 @@
                                 <input type="text" name="title" class="form-control" placeholder="Blog Title" aria-describedby="basic-addon1">
                             </div>
 
-                            <!-- <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon1">Publish</span>
-                                    <input type="text" name="publish" class="form-control" placeholder="publish" aria-describedby="basic-addon1">
-                                </div> -->
                         
                          
                             <textarea name="content" placeholder="Blog body"></textarea>
@@ -59,7 +51,7 @@
               <div class="modal-content">
                 <div class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Add Categoryr</h4>
+                  <h4 class="modal-title">Add Category</h4>
                 </div>
                 <div class="modal-body">
                         <form method="post" action="{% url 'blog:hc-category' %}">

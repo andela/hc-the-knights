@@ -136,7 +136,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-SITE_ROOT = "hc-the-knight.herokuapp.com"
+SITE_ROOT = "localhost:8000"
 
 PING_ENDPOINT = SITE_ROOT + "/ping/"
 PING_EMAIL_DOMAIN = HOST
