@@ -60,7 +60,6 @@ def my_checks(request):
             g_checks.append(check)
             if department != "":
                 departments.add(department)
-
     ctx = {
         "page": "checks",
         "checks": g_checks,
@@ -141,7 +140,6 @@ def department_checks(request, dept):
     }
 
     return render(request, "front/department_checks.html", ctx)
-
 
 def _welcome_check(request):
     check = None
