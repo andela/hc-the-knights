@@ -92,6 +92,7 @@ class Check(models.Model):
         return errors
 
     def get_status(self):
+        now = timezone.now()
         if self.status in ("new", "paused"):
             return self.status
 
@@ -99,6 +100,9 @@ class Check(models.Model):
 
         if self.last_ping + self.timeout + self.grace > now:
             return "up"
+        
+        if self.often and ((now - self.last_ping) < (self.timeout + self.grace)):
+            return "often"
 
         return "down"
 
