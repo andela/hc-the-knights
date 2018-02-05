@@ -18,7 +18,7 @@ def create_categories_and_blogs(request):
     form = BlogCategoryForm(request.POST or None, prefix="create_category")
     form_blog = BlogForm(request.POST or None, prefix="create_blog")
     categories = BlogCategory.objects.all()
-    blogs = Blog.objects.all()
+    # blogs = Blog.objects.all()
     cxt = {
         'form':form,
         'categories':categories,
@@ -132,7 +132,7 @@ def view_blog_detail(request, pk):
         'pk': blog.id,
         'tweet_url': tweet_url, 
     }
-    return render(request, "blog/view_post.html", ctx)
+    return render(request, "blog/view_post.html", ctx, slug)
 
 @login_required
 def edit_blog(request, pk):
