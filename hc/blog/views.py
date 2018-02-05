@@ -111,7 +111,8 @@ def add_comment(request, post):
 def view_blog_detail(request, pk):
     """This function displays a single blog and the comments associated with it"""
     form_comment = CommentForm(request.POST or None)
-    tweet_url = f"hc-the-knight.herokuapp.com/blog/view/{ pk }"
+    pk = pk
+    tweet_url = f"hc-the-knight.herokuapp.com/blog/view/{pk}"
     blog = Blog.objects.filter(pk=pk).first()
     comments_list = Comment.objects.filter(post=blog)
     paginator = Paginator(comments_list, 5)
