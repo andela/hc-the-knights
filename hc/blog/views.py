@@ -132,7 +132,7 @@ def view_blog_detail(request, pk):
         'pk': blog.id,
         'tweet_url': tweet_url, 
     }
-    return render(request, "blog/view_post.html", ctx, slug)
+    return render(request, "blog/view_post.html", ctx)
 
 @login_required
 def edit_blog(request, pk):
