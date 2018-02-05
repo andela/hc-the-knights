@@ -80,8 +80,7 @@ class Command(BaseCommand):
         members = Member.objects.filter(team=check.user.profile).all()
         for member in members:
             if member.priority == "LOW" or (member.priority == "HIGH" and not check.is_alerted):
-                channel = Channel.objects.filter(
-                    value=member.user.email).first()
+                channel = Channel.objects.filter(value=member.user.email).first()
                 check.is_alerted = True
                 check.save()
                 error = channel.notify(check)
