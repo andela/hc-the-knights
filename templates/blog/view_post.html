@@ -4,5 +4,28 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
+<div class="col-md-12">
+    <div class="col-md-6">
+        <h1>
+            {{ post.title }}
+        </h1>
+    </div>
+    <div class="col-md-6">
+        <small>
+            {{ post.author }} {{ post.created_on }}
+        </small>
+    </div>
+</div>
     {{ post.content }}
+    {% for comment in comments %}
+    {{ comment.body }}
+    {{ comment.name }}
+    {% endfor %}
+
+    <h4>Add Comment</h4>
+        <form method="post" action="{% url 'blog:hc-add-comment' post.id %}">
+            {% csrf_token %}
+            {{ form_comment.as_p }}
+            <button type = "submit" name = "add_comment">submit</button>
+        </form>
 {% endblock %}

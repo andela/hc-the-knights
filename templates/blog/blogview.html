@@ -1,9 +1,8 @@
 {% extends "front/base_docs.html" %}
 {% load staticfiles %}
 
-{% block title %}<h1>
-        Blog Categories
-</h1>
+{% block title %}
+    Blog Categories
 {% endblock %}
 
 {% block content %}
@@ -44,7 +43,7 @@
                 {% for post in blogs %}
                 <div class="panel-group">
                     <div class="panel panel-default" style="font-family: Arial, Helvetica, sans-serif; font-size:20px">
-                            <a data-toggle="collapse" href="#{{ post.id }}">
+                            <a href="{% url 'blog:hc-view-blog' post.slug %}">
                                 {{ post.title }}
                                 </a>
                         </div>
