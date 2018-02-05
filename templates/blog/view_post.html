@@ -16,6 +16,7 @@
                     <div id="post1" class="panel-body" style="font-size:20px">
                         {{ blog.content }}
                     </div>
+                    {% if request.user.id == blog.author.id %}
                     <div class="panel-footer" style="font-size:20px">
                             {% if request.user == blog.author %}
                         <a id="button1" href="{% url 'blog:hc-edit-blog' blog.id %}">

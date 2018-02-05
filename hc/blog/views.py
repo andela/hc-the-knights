@@ -25,8 +25,10 @@ def create_categories_and_blogs(request):
         'form_blog':form_blog,
         'blogs':blogs
     }
+    
     if request.method == 'POST':
         if "create_category" in request.POST:
+            print (request.POST)
             if form.is_valid():
                 category = form.save(commit=False)
                 category.title = form.cleaned_data['title']
@@ -34,6 +36,7 @@ def create_categories_and_blogs(request):
                 return render(request, 'blog/create_categories_and_blogs.html', cxt)
             return HttpResponseRedirect('/blog/', cxt)
         elif "create_blog" in request.POST:
+            print (request.POST)
             form_blog = BlogForm(request.POST, prefix='create_blog')
             title = request.POST['title']
             category_input = request.POST['selectop']
