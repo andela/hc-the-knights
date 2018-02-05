@@ -8,5 +8,6 @@ myenv/
 .DS_Store
 static/.DS_Store
 .vscode/
+.env
 hc-venv/
 .idea/
