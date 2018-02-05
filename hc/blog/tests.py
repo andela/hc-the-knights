@@ -37,6 +37,6 @@ class BlogCategories(BaseTestCase):
     def test_view_blogs__by_category(self):
         category = BlogCategory.objects.get(title='Machine Learning')
         print (category.id)
-        url = 'http://localhost:8000/blog/views/1/'
+        url = 'hc-the-knight.herokuapp.com/blog/views/1/'
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'blog/blogview.html')
