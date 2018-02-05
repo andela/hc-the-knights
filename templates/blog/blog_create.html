@@ -13,7 +13,8 @@
                 <h2 class="panel-title">Edit Blog Post</h2>
             </div>
             <div class="panel-body">
-                <form method="post" action="{% url 'blog:hc-edit-blog' slug %}" >    
+                <form method="post" action="{% url 'blog:hc-edit-blog' pk %}" >    
+
                         {% csrf_token %}
                         {{ form.as_p }}
                         <div id="mybutton4">

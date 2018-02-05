@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from datetime import datetime
@@ -13,7 +14,7 @@ class BlogCategory(models.Model):
         return self.title
 
 class Blog(models.Model):
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, default = 1)
+    author = models.ForeignKey(User, blank=True, null=True)
     title = models.CharField(max_length=300, blank = False)
     content = models.TextField(blank = False)
     slug = models.SlugField(unique = True)
@@ -21,7 +22,7 @@ class Blog(models.Model):
     created_on = models.DateTimeField(auto_now=False, auto_now_add=True)
     draft = models.BooleanField(default = False)
     updated = models.DateTimeField(auto_now=False, auto_now_add=True)
-    publish = models.DateTimeField(auto_now=False, auto_now_add=False)
+    # publish = models.DateTimeField(auto_now=False, auto_now_add=False)
 
     class Meta:
         ordering = ['created_on']
@@ -47,7 +48,6 @@ from .utils import unique_slug_generator
 
 def pre_save_post_receiver(sender, instance, *args, **kwargs):
     if not instance.slug:
-        # instance.slug = create_slug(instance)
         instance.slug = unique_slug_generator(instance)
 
 class Comment(models.Model):

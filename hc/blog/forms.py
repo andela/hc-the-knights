@@ -7,11 +7,11 @@ class BlogCategoryForm(forms.ModelForm):
         fields = ('title',)
 
 class BlogForm(forms.ModelForm):
-    # title = forms.CharField(max_length=100, required=False)
-    # content = forms.CharField(max_length=500, required=False)
+    # title = forms.CharField(max_length=100, required=True)
+    # content = forms.CharField(max_length=500, required=True)
     class Meta:
         model = Blog
-        fields = ('category', 'title','content', 'draft', 'publish',)
+        fields = ('category', 'title','content', 'draft',)
 
 class CommentForm(forms.ModelForm):
     class Meta:

@@ -7,28 +7,28 @@
 <link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css">
 <div class="row">
     <div class="col-md-8">
-            <div class="panel panel-default">
+            <div  class="panel panel-default">
                 
-                    <div class="panel-heading" style="text-align:justify">
-                        <h3 class="panel-title" style="font-size:50px">{{ blog.title }}</h3>
-                        <h3 class="panel-title">By: Health Checks</h3>
+                    <div id="post"class="panel-heading" style="text-align:justify">
+                        <h3 class="panel-title" style="font-size:50px">{{ blog.title|title }}</h3>
                         <small>created on:{{ blog.created_on}}</small>
                     </div>
-                    <!-- <a target="_blank"  href="https://twitter.com/intent/tweet?text={{blog.title}}&url={{tweet_url}}&hashtags=HealthChecks"></a> -->
-                    <div class="panel-body" style="font-size:20px">
+                    <div id="post1" class="panel-body" style="font-size:20px">
                         {{ blog.content }}
                     </div>
                     <div class="panel-footer" style="font-size:20px">
-                        <a id="button1" href="{% url 'blog:hc-edit-blog' blog.slug %}">
+                            {% if request.user == blog.author %}
+                        <a id="button1" href="{% url 'blog:hc-edit-blog' blog.id %}">
                             <button  type="button" class="btn btn-primary">
                                 edit blog
                             </button>
                         </a>
-                        <a id="button1" href="{% url 'blog:hc-delete-blog' blog.slug %}">
+                        <a id="button1" href="{% url 'blog:hc-delete-blog' blog.id %}">
                             <button  type="button" class="btn btn-primary" >
                                 delete blog
                             </button>
                         </a>
+                    {% endif %}
                         <a id="button2" class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{blog.title}}&url={{tweet_url}}&hashtags=HealthChecks">
                             <button  type="button" class="btn btn-primary" >
                                 Twitter
@@ -73,11 +73,14 @@
                 </span>
             </div>
         <!-- end pagination -->
+        {% if request.user.is_authenticated %}
+
         <form id="myinput" method="post" action="{% url 'blog:hc-add-comment' post %}">
                 {% csrf_token %}
                 {{ form_comment.as_p }}
                 <button type = "submit" name = "add_comment">Add Comment</button>
         </form>
+        {% endif %}
     </div>
 </div>
 {% endblock %}

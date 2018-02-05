@@ -11,17 +11,32 @@ class BlogCategories(BaseTestCase):
         self.category = BlogCategory(title='Machine Learning')
         self.category.save()
         self.blog = Blog(title='Basics', content='It is the very beginning', 
-                        category=self.category, publish='2018-02-13')
+                        category=self.category)
         self.blog.save()
 
     def test_create_blog(self):
-        url = reverse('blog:hc-categories')
-        data = {'title':'Computer engineering', 'content':'yes yes', 
-                'category':self.category, 'publish':'2018-02-13'}
+        url = reverse('blog:hc-category')
+        data = {'selectop': ['1'], 'title': ['read'], 'content': ['read'], 'create_blog': ['']}
         response = self.client.post(url, data)
-        category = Blog.objects.filter(title='Computer engineering').first()
-        print (category)
-        print ('ffffffffffff')
-        self.assertEqual = ('Computer engineering', category.title)
+        blog = Blog.objects.filter(title='read').first()
+        self.assertEqual('read', blog.title)
 
-    
+    def test_create_category(self):
+        url = reverse('blog:hc-category')
+        data = {'create_category-title': ['read'], 'create_category': ['']}
+        response = self.client.post(url, data)
+        category = BlogCategory.objects.filter(title='read').first()
+        self.assertEqual('read', category.title)
+
+    def test_home_page_returns_all_categories(self):
+        url = reverse('blog:hc-category')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogview.html')
+
+    def test_view_blogs__by_category(self):
+        category = BlogCategory.objects.get(title='Machine Learning')
+        print (category.id)
+        url = 'http://localhost:8000/blog/views/1/'
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'blog/blogview.html')
