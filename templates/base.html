@@ -98,6 +98,10 @@
                     <a href="{% url 'hc-user-guide' %}">Docs</a>
                 </li>
 
+                <li {% if page == 'docs' %} class="active" {% endif %}>
+                        <a href="{% url 'blog:hc-category' %}">Blogs</a>
+                    </li>
+
                 <li {% if page == 'about' %} class="active" {% endif %}>
                     <a href="{% url 'hc-about' %}">About</a>
                 </li>

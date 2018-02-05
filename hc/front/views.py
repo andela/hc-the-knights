@@ -660,3 +660,12 @@ def privacy(request):
 
 def terms(request):
     return render(request, "front/terms.html", {})
+
+#save a category
+@login_required
+def create_category(request):
+    pass
+
+@login_required
+def view(request):
+    pass
