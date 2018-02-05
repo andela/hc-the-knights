@@ -73,7 +73,7 @@ def add_comment(request, post):
     cxt = {
         'form_comment':form_comment,
        }
-    blog = Blog.objects.get(id=post)  
+    blog = Blog.objects.get(id=post)
     if request.method == "POST":
         if "add_comment" in request.POST: 
             
@@ -94,12 +94,13 @@ def add_comment(request, post):
 def view_blog_detail(request, slug):
     form_comment = CommentForm(request.POST or None)
     # post = get_object_or_404(Blog, slug=slug)
-    blog = Blog.objects.filter(slug=slug)
+    blog = Blog.objects.filter(slug=slug).first()
     comments = Comment.objects.filter(post=blog)
     ctx = {
         'comments':comments,
         'form_comment':form_comment,
-        'blog':blog
+        'blog':blog,
+        'post':blog.id    
     }
     return render(request, "blog/view_post.html", ctx, slug)
 

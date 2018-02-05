@@ -8,26 +8,17 @@
 <div class="row">
     <div class="col-md-8">
             <div class="panel panel-default">
-                {% for blog in blogs %}
-                    <div class="panel-heading" style="text-align:center">
+                
+                    <div class="panel-heading" style="text-align:justify">
                         <h3 class="panel-title" style="font-size:50px">{{ blog.title }}</h3>
-                        <h3 class="panel-title">By: Phiona</h3>
-                        <small>11/23/2019</small>
+                        <h3 class="panel-title">By: {{ blog.author}}</h3>
+                        <small>created on:{{ blog.created_on}}</small>
                     </div>
 
                     <div class="panel-body" style="font-size:20px">
-                        Do you have a friend who is loquacious, 
-                        “talking” seemingly ceaselessly? Phone companies love 
-                        those who possess a great deal of loquacity, for their 
-                        “talkativeness” earns them quite a bit of money. 
-                        Is that loquacious friend a ventriloquist, 
-                        able to throw his “talking” so that it appears to come out 
-                        of someone else’s mouth? And does it ever seem that this 
-                        loquacious friend is often performing a soliloquy
-                        , “talking” all by himself because he does not wait for replies, 
-                        jabbering on and on and on … and on?
+                        {{ blog.content }}
                     </div>
-                    {% endfor %}
+                    
             </div>
             
         </div>
@@ -36,12 +27,15 @@
         <div style="margin-top: -15px;">
             <h1>COMMENTS</h1>
         </div>
+        {% for comment in comments %}
         <div class="panel panel-default" style="width:150%">
+            
             <div class="panel-body">
-                Basic panel exampleDo you have a friend who is loquacious, “talking” seemingly ceaselessly? Phone companies love those who possess a great deal of
+                {{ comment.body }}
             </div>
         </div>
-        <form id="myinput" method="post" action="{% url 'blog:hc-add-comment' post.id %}">
+        {% endfor %}
+        <form id="myinput" method="post" action="{% url 'blog:hc-add-comment' post %}">
                 {% csrf_token %}
                 {{ form_comment.as_p }}
                 <button type = "submit" name = "add_comment">Add Comment</button>

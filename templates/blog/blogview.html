@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block content %}
-
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" type="text/css">
 <div class="col-md-12">
         <h2 style="text-align:center; font-size:70px;">
                 Blog Posts
@@ -27,7 +27,7 @@
                 {% endfor %}
             </ul>
     </div>
-    <div class='col-md-8'>
+    <div class='col-md-7'>
             <div class="panel panel-default">
                     <div class="panel-heading">
                       <h3 class="panel-title">{{ category }}</h3>
@@ -41,6 +41,9 @@
                     </div>
                     {% endfor %}
             </div>
+    </div>
+    <div id="mybutton" class='col-md-2'>
+        <a style="margin-top:-20px" href="{% url 'blog:hc-category' %}"><button type="button" class="btn btn-primary">CREATE BLOG</button></a>
     </div>
 </div>
                         
