@@ -75,3 +75,29 @@ class BlogCategories(BaseTestCase):
         data = {'body': [''], 'post':[blog.id], 'add_comment': ['']}
         response = self.client.post(url, data)
         self.assertTemplateUsed(response, "blog/view_post.html")
+    
+    def test_if_get_redirect(self):
+        url = reverse('blog:hc-category')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'blog/blogview.html')
+
+    def test_no_blogs_to_display(self):
+        category = BlogCategory(title='Reads')
+        category.save()
+        category1 = BlogCategory.objects.get(title='Reads')
+        url = reverse('blog:hc-category-blogs', kwargs={'category':category1.id})
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'blog/blogview.html')
+    
+    def test_comment_url_renders_template_when_request_is_get(self):
+        blog = Blog.objects.filter(title='Basics').first()
+        url = reverse('blog:hc-add-comment', kwargs={'post':blog.id})
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'blog/view_post.html')
+
+    def test_view_blog_detail(self):
+        blog = Blog.objects.filter(title='Basics').first()
+        url = reverse('blog:hc-view-blog', kwargs={'pk':blog.id})
+        response = self.client.get(url)
+        self.assertTemplateUsed(response, 'blog/view_post.html')
