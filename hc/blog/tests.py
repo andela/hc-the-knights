@@ -41,14 +41,6 @@ class BlogCategories(BaseTestCase):
         response = self.client.get(url)
         self.assertTemplateUsed(response, 'blog/blogview.html')
 
-    def test_edit_blog(self):
-        blog = Blog.objects.filter(title='Basics').first()
-        url = reverse('blog:hc-edit-blog', kwargs={'pk':blog.id})
-        data = {'category': ['1'], 'title': ['read'], 'content': ['read'], 'editblog': ['']}
-        response = self.client.post(url, data)
-        blogedit = Blog.objects.filter(title='read').first()
-        self.assertEqual('read',blogedit.title)
-
     def test_delete_blog(self):
         blog = Blog.objects.filter(title='Basics').first()
         url = reverse('blog:hc-delete-blog', kwargs={'pk':blog.id})
