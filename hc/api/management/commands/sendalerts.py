@@ -22,10 +22,10 @@ class Command(BaseCommand):
         now = timezone.now()
         going_down = query.filter(alert_after__lt=now, status="up")
         going_up = query.filter(alert_after__gt=now, status="down")
-        going_often = query.filter(alert_after__lt=now, status="often")
-        nagging_now = query.filter(nag_after__lt=now, status="down") 
+        nagging_now = query.filter(nag_after__lt=now, status="down")
         # Don't combine this in one query so Postgres can query using index:
-        checks = list(going_down.iterator()) + list(going_up.iterator()) + list(nagging_now.iterator())
+        checks = list(going_down.iterator()) + \
+            list(going_up.iterator()) + list(nagging_now.iterator())
         if not checks:
             return False
 
@@ -37,10 +37,8 @@ class Command(BaseCommand):
 
     def handle_one(self, check):
         """ Send an alert for a single check.
-
         Return True if an appropriate check was selected and processed.
         Return False if no checks need to be processed.
-
         """
 
         # Save the new status. If sendalerts crashes,
@@ -52,7 +50,7 @@ class Command(BaseCommand):
             check.nag_status = True
             self.handles_priority(check)
             check.nag_after = (timezone.now() + check.timeout + check.grace)
-            check.save()
+        check.save()
 
         tmpl = "\nSending alert, status=%s, nag =%s, code=%s\n"
         self.stdout.write(tmpl % (check.status, check.nag_status, check.code))

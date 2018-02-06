@@ -34,7 +34,6 @@ def my_checks(request):
 
     checks = []
     current_user_id = request.user.id
-
     if request.team == request.user.profile:
         q = Check.objects.filter(user=request.team.user).order_by("created")
         checks = list(q)
@@ -660,3 +659,12 @@ def privacy(request):
 
 def terms(request):
     return render(request, "front/terms.html", {})
+
+#save a category
+@login_required
+def create_category(request):
+    pass
+
+@login_required
+def view(request):
+    pass

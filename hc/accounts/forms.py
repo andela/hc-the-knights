@@ -29,6 +29,9 @@ class InviteTeamMemberForm(forms.Form):
 class UpdateMemberPriority(forms.Form):
     email = LowercaseEmailField()
 
+class UpdateMemberPriority(forms.Form):
+    email = LowercaseEmailField()
+
 
 class RemoveTeamMemberForm(forms.Form):
     email = LowercaseEmailField()

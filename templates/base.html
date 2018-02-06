@@ -98,10 +98,14 @@
                     <a href="{% url 'hc-user-guide' %}">Docs</a>
                 </li>
 
+                <li {% if page == 'blog-page' %} class="active" {% endif %}>
+                    <a href="{% url 'blog:hc-category' %}">Blogs</a>
+                </li>
+
                 <li {% if page == 'about' %} class="active" {% endif %}>
                     <a href="{% url 'hc-about' %}">About</a>
                 </li>
-
+              
             </ul>
 
 
@@ -111,7 +115,6 @@
                 <li><a href="{% url 'hc-login' %}">Log In</a></li>
             </ul>
             {% endif %}
-
             {% if request.user.is_authenticated %}
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">

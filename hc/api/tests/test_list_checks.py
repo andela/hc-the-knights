@@ -44,7 +44,7 @@ class ListChecksTestCase(BaseTestCase):
         # Assert the expected length of checks
         # Assert the checks Alice 1 and Alice 2's timeout, grace, ping_url, status,
         # last_ping, n_pings and pause_url
-        ping_endpoint = 'http://localhost:8000/ping/'
+        ping_endpoint = 'hc-the-knight.herokuapp.com/ping/'
         alice_2_code = str(self.a2.code)
         alice_2_ping_url = ping_endpoint + alice_2_code
         pauseurl = '/api/v1/checks/'

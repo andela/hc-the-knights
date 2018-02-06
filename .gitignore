@@ -9,3 +9,8 @@ myenv/
 static/.DS_Store
 .vscode/
 .env
+hc-venv/
+.idea/
+.env
+
+
